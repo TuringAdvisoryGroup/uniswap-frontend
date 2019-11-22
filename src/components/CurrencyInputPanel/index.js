@@ -529,6 +529,7 @@ function CurrencySelectModal({ isOpen, onDismiss, onTokenSelect, allBalances }) 
     if (isAddress(searchQuery) && exchangeAddress === undefined) {
       return <TokenModalInfo>Searching for Exchange...</TokenModalInfo>
     }
+
     if (isAddress(searchQuery) && exchangeAddress === ethers.constants.AddressZero) {
       return (
         <>
@@ -543,31 +544,20 @@ function CurrencySelectModal({ isOpen, onDismiss, onTokenSelect, allBalances }) 
       return <TokenModalInfo>{t('noExchange')}</TokenModalInfo>
     }
 
-    return filteredTokenList.map(({ address, symbol, name, balance, usdBalance }) => {
-      return (
-        <TokenModalRow key={address} onClick={() => _onTokenSelect(address)}>
-          <TokenRowLeft>
-            <TokenLogo address={address} size={'2rem'} />
-            <TokenSymbolGroup>
-              <span id="symbol">{symbol}</span>
-              <TokenFullName>{name}</TokenFullName>
-            </TokenSymbolGroup>
-          </TokenRowLeft>
-          <TokenRowRight>
-            {balance ? (
-              <TokenRowBalance>{balance && (balance > 0 || balance === '<0.0001') ? balance : '-'}</TokenRowBalance>
-            ) : account ? (
-              <SpinnerWrapper src={Circle} alt="loader" />
-            ) : (
-              '-'
-            )}
-            <TokenRowUsd>
-              {usdBalance ? (usdBalance.lt(0.01) ? '<$0.01' : '$' + formatToUsd(usdBalance)) : ''}
-            </TokenRowUsd>
-          </TokenRowRight>
-        </TokenModalRow>
-      )
-    })
+    return filteredTokenList.reduce(
+      (map, token) => {
+        if (socialMoneyMap[token.symbol]) {
+          map.socialMoney.push(<TokenRow token={token} account={account} _onTokenSelect={_onTokenSelect} />)
+        } else {
+          map.tokens.push(<TokenRow token={token} account={account} _onTokenSelect={_onTokenSelect} />)
+        }
+        return map
+      },
+      {
+        tokens: [],
+        socialMoney: []
+      }
+    )
   }
 
   // manage focus on modal show
@@ -607,8 +597,51 @@ function CurrencySelectModal({ isOpen, onDismiss, onTokenSelect, allBalances }) 
             onChange={onInput}
           />
         </SearchContainer>
-        <TokenList>{renderTokenList()}</TokenList>
+        {/* <TokenList>{renderTokenList()}</TokenList> */}
+        <List list={renderTokenList()} />
       </TokenModal>
     </Modal>
+  )
+}
+
+const TokenRow = ({ token, account, _onTokenSelect }) => {
+  const { address, symbol, name, balance, usdBalance } = token
+  return (
+    <TokenModalRow key={address} onClick={() => _onTokenSelect(address)}>
+      <TokenRowLeft>
+        <TokenLogo address={address} size={'2rem'} />
+        <TokenSymbolGroup>
+          <span id="symbol">{symbol}</span>
+          <TokenFullName>{name}</TokenFullName>
+        </TokenSymbolGroup>
+      </TokenRowLeft>
+      <TokenRowRight>
+        {balance ? (
+          <TokenRowBalance>{balance && (balance > 0 || balance === '<0.0001') ? balance : '-'}</TokenRowBalance>
+        ) : account ? (
+          <SpinnerWrapper src={Circle} alt="loader" />
+        ) : (
+          '-'
+        )}
+        <TokenRowUsd>{usdBalance ? (usdBalance.lt(0.01) ? '<$0.01' : '$' + formatToUsd(usdBalance)) : ''}</TokenRowUsd>
+      </TokenRowRight>
+    </TokenModalRow>
+  )
+}
+
+const socialMoneyMap = {
+  ETH: true,
+  DAI: true
+}
+
+const List = ({ list }) => {
+  const { tokens, socialMoney } = list
+  return (
+    <TokenList>
+      <p style={{ paddingLeft: '1rem' }}>Social Money</p>
+      {socialMoney}
+      <p style={{ paddingLeft: '1rem' }}>Other Tokens</p>
+      {tokens}
+    </TokenList>
   )
 }

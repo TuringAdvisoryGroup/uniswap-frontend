@@ -87,7 +87,7 @@ const INITIAL_TOKENS_CONTEXT = {
       [NAME]: 'Dai Stablecoin v1.0',
       [SYMBOL]: 'DAI',
       [DECIMALS]: 18,
-      [EXCHANGE_ADDRESS]: '0x09cabEC1eAd1c0Ba254B09efb3EE13841712bE14'
+      [EXCHANGE_ADDRESS]: '0x09cabEC1eAd1c0Ba254B09efb3EE13841712bE14' //second
     },
     '0x0Cf0Ee63788A0849fE5297F3407f701E122cC023': {
       [NAME]: 'Streamr DATAcoin',
@@ -419,6 +419,8 @@ const INITIAL_TOKENS_CONTEXT = {
       [DECIMALS]: 18,
       [EXCHANGE_ADDRESS]: '0x5048b9d01097498Fd72F3F14bC9Bc74A5aAc8fA7'
     },
+
+    // first
     '0x09cabEC1eAd1c0Ba254B09efb3EE13841712bE14': {
       [NAME]: 'Uniswap V1',
       [SYMBOL]: 'UNI-V1:DAI',
