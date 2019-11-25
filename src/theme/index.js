@@ -85,6 +85,7 @@ const theme = darkMode => ({
   buttonOutlineGrey: darkMode ? '#FAFAFA' : '#F2F2F2',
   tokenRowHover: darkMode ? '#404040' : '#F2F2F2',
   rollGrey: '#293354',
+  lightGrey: '#cccccc',
   //blacks
   charcoalBlack: darkMode ? '#F2F2F2' : '#404040',
   // blues
@@ -93,6 +94,9 @@ const theme = darkMode => ({
   royalBlue: darkMode ? '#DC6BE5' : '#2F80ED',
   loadingBlue: darkMode ? '#e4f0ff' : '#e4f0ff',
   rollBlue: '#1AF4FF',
+  rollPrimaryBlue: '#004EFF',
+
+  autumnDusk: '#002579',
 
   // purples
   wisteriaPurple: '#DC6BE5',

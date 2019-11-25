@@ -34,8 +34,8 @@ const BetaMessage = styled.div`
   padding: 0.5rem 1rem;
   padding-right: 2rem;
   margin-bottom: 1rem;
-  border: 1px solid ${({ theme }) => transparentize(0.6, theme.rollBlue)};
-  background-color: ${({ theme }) => transparentize(0.9, theme.rollBlue)};
+  border: 1px solid ${({ theme }) => transparentize(0.6, theme.lightGrey)};
+  background-color: ${({ theme }) => transparentize(0.9, 'white')};
   border-radius: 2rem;
   font-size: 0.75rem;
   line-height: 1rem;
@@ -43,14 +43,14 @@ const BetaMessage = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  color: ${({ theme }) => theme.rollBlue};
+  color: ${({ theme }) => 'black'};
 
   &:after {
     content: '✕';
     top: 0.5rem;
     right: 1rem;
     position: absolute;
-    color: ${({ theme }) => theme.wisteriaPurple};
+    color: ${({ theme }) => theme.rollPrimaryBlue};
   }
 `
 
@@ -90,7 +90,7 @@ const StyledNavLink = styled(NavLink).attrs({
     box-shadow: 0 4px 8px 0 ${({ theme }) => transparentize(0.95, theme.shadowColor)};
     box-sizing: border-box;
     font-weight: 500;
-    color: ${({ theme }) => theme.royalBlue};
+    color: ${({ theme }) => theme.rollPrimaryBlue};
     :hover {
       /* border: 1px solid ${({ theme }) => darken(0.1, theme.mercuryGray)}; */
       background-color: ${({ theme }) => darken(0.01, theme.inputBackground)};
@@ -99,7 +99,7 @@ const StyledNavLink = styled(NavLink).attrs({
 
   :hover,
   :focus {
-    color: ${({ theme }) => darken(0.1, theme.royalBlue)};
+    color: ${({ theme }) => darken(0.1, theme.rollPrimaryBlue)};
   }
 `
 

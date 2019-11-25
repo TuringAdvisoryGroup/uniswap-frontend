@@ -69,26 +69,19 @@ const StyledBorderlessInput = styled(BorderlessInput)`
 const CurrencySelect = styled.button`
   align-items: center;
   font-size: 1rem;
-  color: ${({ selected, theme }) => (selected ? theme.textColor : theme.royalBlue)};
+  color: ${({ selected, theme }) => (selected ? theme.textColor : 'white')};
   height: 2rem;
-  border: 1px solid ${({ selected, theme }) => (selected ? theme.mercuryGray : theme.royalBlue)};
+  border: 1px solid ${({ selected, theme }) => (selected ? theme.mercuryGray : theme.rollPrimaryBlue)};
   border-radius: 2.5rem;
-  background-color: ${({ selected, theme }) => (selected ? theme.concreteGray : theme.zumthorBlue)};
+  background-color: ${({ selected, theme }) => (selected ? theme.concreteGray : theme.rollPrimaryBlue)};
   outline: none;
   cursor: pointer;
   user-select: none;
 
   :hover {
-    border: 1px solid
-      ${({ selected, theme }) => (selected ? darken(0.1, theme.mercuryGray) : darken(0.1, theme.royalBlue))};
-  }
-
-  :focus {
-    border: 1px solid ${({ theme }) => darken(0.1, theme.royalBlue)};
-  }
-
-  :active {
-    background-color: ${({ theme }) => theme.zumthorBlue};
+    border: 1px solid white;
+    background-color: ${({ selected, theme }) =>
+      selected ? darken(0.1, theme.concreteGray) : darken(0.1, theme.rollPrimaryBlue)};
   }
 `
 
@@ -103,7 +96,7 @@ const StyledDropDown = styled(DropDown)`
   height: 35%;
 
   path {
-    stroke: ${({ selected, theme }) => (selected ? theme.textColor : theme.royalBlue)};
+    stroke: ${({ selected, theme }) => (selected ? theme.textColor : 'white')};
   }
 `
 
@@ -122,7 +115,7 @@ const Container = styled.div`
 
   background-color: ${({ theme }) => theme.inputBackground};
   :focus-within {
-    border: 1px solid ${({ theme }) => theme.malibuBlue};
+    border: 1px solid ${({ theme }) => theme.rollPrimaryBlue};
   }
 `
 
@@ -379,7 +372,7 @@ export default function CurrencyInputPanel({
       <Container error={!!errorMessage}>
         <LabelRow>
           <LabelContainer>
-            <span>{title}</span> <span>{description}</span>
+            <span style={{ color: 'black', fontWeight: 'bold' }}>{title}</span> <span>{description}</span>
           </LabelContainer>
 
           <ErrorSpan
@@ -548,6 +541,8 @@ function CurrencySelectModal({ isOpen, onDismiss, onTokenSelect, allBalances }) 
       (map, token) => {
         if (socialMoneyMap[token.symbol]) {
           map.socialMoney.push(<TokenRow token={token} account={account} _onTokenSelect={_onTokenSelect} />)
+        } else if (friendsOfRollMap[token.symbol]) {
+          map.friends.push(<TokenRow token={token} account={account} _onTokenSelect={_onTokenSelect} />)
         } else {
           map.tokens.push(<TokenRow token={token} account={account} _onTokenSelect={_onTokenSelect} />)
         }
@@ -555,7 +550,8 @@ function CurrencySelectModal({ isOpen, onDismiss, onTokenSelect, allBalances }) 
       },
       {
         tokens: [],
-        socialMoney: []
+        socialMoney: [],
+        friends: []
       }
     )
   }
@@ -630,16 +626,23 @@ const TokenRow = ({ token, account, _onTokenSelect }) => {
 }
 
 const socialMoneyMap = {
+  // ETH: true,
+  // DAI: true
+}
+
+const friendsOfRollMap = {
   ETH: true,
   DAI: true
 }
 
 const List = ({ list }) => {
-  const { tokens, socialMoney } = list
+  const { tokens, socialMoney, friends } = list
   return (
     <TokenList>
       <p style={{ paddingLeft: '1rem' }}>Social Money</p>
       {socialMoney}
+      <p style={{ paddingLeft: '1rem' }}>Friends of Roll</p>
+      {friends}
       <p style={{ paddingLeft: '1rem' }}>Other Tokens</p>
       {tokens}
     </TokenList>

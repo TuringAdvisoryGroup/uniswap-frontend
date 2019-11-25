@@ -42,14 +42,14 @@ const Web3StatusError = styled(Web3StatusGeneric)`
 `
 
 const Web3StatusConnect = styled(Web3StatusGeneric)`
-  background-color: ${({ theme }) => theme.royalBlue};
-  border: 1px solid ${({ theme }) => theme.royalBlue};
+  background-color: ${({ theme }) => theme.rollPrimaryBlue};
+  border: 1px solid ${({ theme }) => theme.rollPrimaryBlue};
   color: ${({ theme }) => theme.white};
   font-weight: 500;
 
   :hover,
   :focus {
-    background-color: ${({ theme }) => darken(0.1, theme.royalBlue)};
+    background-color: ${({ theme }) => darken(0.1, theme.rollPrimaryBlue)};
   }
 `
 

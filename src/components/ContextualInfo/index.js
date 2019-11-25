@@ -23,7 +23,7 @@ const Details = styled.div`
 
 const SummaryWrapperContainer = styled.div`
   ${({ theme }) => theme.flexRowNoWrap};
-  color: ${({ theme }) => theme.royalBlue};
+  color: ${({ theme }) => theme.rollPrimaryBlue};
   text-align: center;
   margin-top: 1rem;
   padding-top: 1rem;

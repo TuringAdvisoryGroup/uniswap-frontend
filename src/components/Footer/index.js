@@ -24,13 +24,13 @@ const FooterElement = styled.div`
 const Title = styled.div`
   display: flex;
   align-items: center;
-  color: ${({ theme }) => theme.uniswapPink};
+  color: ${({ theme }) => theme.rollPrimaryBlue};
 
   :hover {
     cursor: pointer;
   }
   #link {
-    text-decoration-color: ${({ theme }) => theme.uniswapPink};
+    text-decoration-color: ${({ theme }) => theme.rollPrimaryBlue};
   }
 
   #title {
@@ -38,9 +38,9 @@ const Title = styled.div`
     font-size: 0.825rem;
     margin-right: 12px;
     font-weight: 400;
-    color: ${({ theme }) => theme.uniswapPink};
+    color: ${({ theme }) => theme.rollPrimaryBlue};
     :hover {
-      color: ${({ theme }) => darken(0.2, theme.uniswapPink)};
+      color: ${({ theme }) => darken(0.2, theme.rollPrimaryBlue)};
     }
   }
 `
@@ -88,23 +88,23 @@ export default function Footer() {
           </Link>
         </Title>
       </FooterElement>
-
-      <StyledToggle
-        checked={!isDark}
-        uncheckedIcon={
-          <EmojiToggle role="img" aria-label="moon">
-            {/* eslint-disable-line jsx-a11y/accessible-emoji */}
-            🌙️
-          </EmojiToggle>
-        }
-        checkedIcon={
-          <EmojiToggle role="img" aria-label="sun">
-            {/* eslint-disable-line jsx-a11y/accessible-emoji */}
-            {'☀️'}
-          </EmojiToggle>
-        }
-        onChange={() => toggleDarkMode()}
-      />
     </FooterFrame>
   )
 }
+
+//       <StyledToggle
+//         checked={!isDark}
+//         uncheckedIcon={
+//           <EmojiToggle role="img" aria-label="moon">
+//             {/* eslint-disable-line jsx-a11y/accessible-emoji */}
+//             🌙️
+//           </EmojiToggle>
+//         }
+//         checkedIcon={
+//           <EmojiToggle role="img" aria-label="sun">
+//             {/* eslint-disable-line jsx-a11y/accessible-emoji */}
+//             {'☀️'}
+//           </EmojiToggle>
+//         }
+//         onChange={() => toggleDarkMode()}
+//       />

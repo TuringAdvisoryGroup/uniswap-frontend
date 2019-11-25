@@ -47,7 +47,7 @@ const Title = styled.div`
     font-weight: 500;
     color: ${({ theme }) => theme.rollGrey};
     :hover {
-      color: ${({ theme }) => darken(0.1, theme.wisteriaPurple)};
+      color: ${({ theme }) => darken(0.1, theme.rollPrimaryBlue)};
     }
   }
 `

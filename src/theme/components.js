@@ -11,17 +11,17 @@ export const Button = styled.button.attrs(({ warning, theme }) => ({
   font-size: 1rem;
   border: none;
   outline: none;
-  background-color: ${({ backgroundColor }) => backgroundColor};
+  background-color: ${({ theme }) => theme.rollPrimaryBlue};
   color: ${({ theme }) => theme.white};
   width: 100%;
 
   :hover,
   :focus {
-    background-color: ${({ backgroundColor }) => darken(0.05, backgroundColor)};
+    background-color: ${({ theme }) => darken(0.05, theme.rollPrimaryBlue)};
   }
 
   :active {
-    background-color: ${({ backgroundColor }) => darken(0.1, backgroundColor)};
+    background-color: ${({ theme }) => darken(0.1, theme.rollPrimaryBlue)};
   }
 
   :disabled {
@@ -37,7 +37,7 @@ export const Link = styled.a.attrs({
 })`
   text-decoration: none;
   cursor: pointer;
-  color: ${({ theme }) => theme.royalBlue};
+  color: ${({ theme }) => theme.rollPrimaryBlue};
 
   :focus {
     outline: none;
