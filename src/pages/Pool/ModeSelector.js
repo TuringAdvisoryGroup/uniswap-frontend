@@ -34,7 +34,7 @@ const LiquidityContainer = styled.div`
   align-items: center;
   padding: 1rem 1rem;
   font-size: 1rem;
-  color: ${({ theme }) => theme.royalBlue};
+  color: ${({ theme }) => theme.rollPrimaryBlue};
   font-weight: 500;
   cursor: pointer;
 
@@ -72,7 +72,7 @@ const StyledNavLink = styled(NavLink).attrs({
     border-radius: 3rem;
     border: 1px solid ${({ theme }) => theme.mercuryGray};
     font-weight: 500;
-    color: ${({ theme }) => theme.royalBlue};
+    color: ${({ theme }) => theme.rollPrimaryBlue};
   }
 `
 
@@ -86,7 +86,7 @@ const PoolModal = styled.div`
 const WrappedDropdown = ({ isError, highSlippageWarning, ...rest }) => <Dropdown {...rest} />
 const ColoredDropdown = styled(WrappedDropdown)`
   path {
-    stroke: ${({ theme }) => theme.royalBlue};
+    stroke: ${({ theme }) => theme.rollPrimaryBlue};
   }
 `
 
