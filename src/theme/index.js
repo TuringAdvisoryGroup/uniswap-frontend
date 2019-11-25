@@ -34,16 +34,28 @@ const flexRowNoWrap = css`
 const white = '#FFFFFF'
 const black = '#000000'
 
+const getTheme = (themeURL, darkMode) => {
+  return false // over ride and render light theme
+  // if (!themeURL) return darkMode
+
+  // themeURL = themeURL.toUpperCase()
+
+  // switch (themeURL) {
+  //   case SUPPORTED_THEMES.DARK:
+  //     return true
+  //   case SUPPORTED_THEMES.LIGHT:
+  //     return false
+
+  //   default:
+  //     return darkMode
+  // }
+}
+
 export default function ThemeProvider({ children }) {
   const [darkMode, toggleDarkMode] = useDarkModeManager()
   const themeURL = checkSupportedTheme(getQueryParam(window.location, 'theme'))
-  const themeToRender = themeURL
-    ? themeURL.toUpperCase() === SUPPORTED_THEMES.DARK
-      ? true
-      : themeURL.toUpperCase() === SUPPORTED_THEMES.LIGHT
-      ? false
-      : darkMode
-    : darkMode
+  const themeToRender = getTheme(themeURL, darkMode)
+
   useEffect(() => {
     toggleDarkMode(themeToRender)
   }, [toggleDarkMode, themeToRender])
@@ -72,6 +84,7 @@ const theme = darkMode => ({
   mineshaftGray: darkMode ? '#E1E1E1' : '#2B2B2B',
   buttonOutlineGrey: darkMode ? '#FAFAFA' : '#F2F2F2',
   tokenRowHover: darkMode ? '#404040' : '#F2F2F2',
+  rollGrey: '#293354',
   //blacks
   charcoalBlack: darkMode ? '#F2F2F2' : '#404040',
   // blues
@@ -79,6 +92,7 @@ const theme = darkMode => ({
   malibuBlue: darkMode ? '#E67AEF' : '#5CA2FF',
   royalBlue: darkMode ? '#DC6BE5' : '#2F80ED',
   loadingBlue: darkMode ? '#e4f0ff' : '#e4f0ff',
+  rollBlue: '#1AF4FF',
 
   // purples
   wisteriaPurple: '#DC6BE5',

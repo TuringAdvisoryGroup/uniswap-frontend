@@ -34,8 +34,8 @@ const BetaMessage = styled.div`
   padding: 0.5rem 1rem;
   padding-right: 2rem;
   margin-bottom: 1rem;
-  border: 1px solid ${({ theme }) => transparentize(0.6, theme.wisteriaPurple)};
-  background-color: ${({ theme }) => transparentize(0.9, theme.wisteriaPurple)};
+  border: 1px solid ${({ theme }) => transparentize(0.6, theme.rollBlue)};
+  background-color: ${({ theme }) => transparentize(0.9, theme.rollBlue)};
   border-radius: 2rem;
   font-size: 0.75rem;
   line-height: 1rem;
@@ -43,7 +43,7 @@ const BetaMessage = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  color: ${({ theme }) => theme.wisteriaPurple};
+  color: ${({ theme }) => theme.rollBlue};
 
   &:after {
     content: '✕';
