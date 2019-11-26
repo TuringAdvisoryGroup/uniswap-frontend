@@ -540,11 +540,32 @@ function CurrencySelectModal({ isOpen, onDismiss, onTokenSelect, allBalances }) 
     return filteredTokenList.reduce(
       (map, token) => {
         if (socialMoneyMap[token.symbol]) {
-          map.socialMoney.push(<TokenRow token={token} account={account} _onTokenSelect={_onTokenSelect} />)
+          map.socialMoney.push(
+            <TokenRow
+              key={`list-tokens-${token.symbol}`}
+              token={token}
+              account={account}
+              _onTokenSelect={_onTokenSelect}
+            />
+          )
         } else if (friendsOfRollMap[token.symbol]) {
-          map.friends.push(<TokenRow token={token} account={account} _onTokenSelect={_onTokenSelect} />)
-        } else {
-          map.tokens.push(<TokenRow token={token} account={account} _onTokenSelect={_onTokenSelect} />)
+          map.friends.push(
+            <TokenRow
+              key={`list-tokens-${token.symbol}`}
+              token={token}
+              account={account}
+              _onTokenSelect={_onTokenSelect}
+            />
+          )
+        } else if (tokens[token.symbol]) {
+          map.tokens.push(
+            <TokenRow
+              key={`list-tokens-${token.symbol}`}
+              token={token}
+              account={account}
+              _onTokenSelect={_onTokenSelect}
+            />
+          )
         }
         return map
       },
@@ -626,25 +647,31 @@ const TokenRow = ({ token, account, _onTokenSelect }) => {
 }
 
 const socialMoneyMap = {
-  // ETH: true,
-  // DAI: true
+  HUE: true
 }
 
 const friendsOfRollMap = {
+  MBC: true,
+  COLR: true
+}
+
+const tokens = {
   ETH: true,
-  DAI: true
+  DAI: true,
+  WETH: true,
+  USDC: true
 }
 
 const List = ({ list }) => {
   const { tokens, socialMoney, friends } = list
   return (
     <TokenList>
+      <p style={{ paddingLeft: '1rem' }}>Tokens</p>
+      {tokens}
       <p style={{ paddingLeft: '1rem' }}>Social Money</p>
       {socialMoney}
       <p style={{ paddingLeft: '1rem' }}>Friends of Roll</p>
       {friends}
-      <p style={{ paddingLeft: '1rem' }}>Other Tokens</p>
-      {tokens}
     </TokenList>
   )
 }

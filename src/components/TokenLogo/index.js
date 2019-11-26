@@ -4,10 +4,16 @@ import { isAddress } from '../../utils'
 
 import { ReactComponent as EthereumLogo } from '../../assets/images/ethereum-logo.svg'
 
-const TOKEN_ICON_API = address =>
-  `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${isAddress(
+const socialMoneyMediaMap = {
+  '0xdcfe18bc46f5a0cd0d3af0c2155d2bcb5ade2fc5':
+    'https://roll-token.s3.amazonaws.com/HUE/4abc8020-b954-4e08-be20-5f6958735b01'
+}
+
+const TOKEN_ICON_API = address => {
+  return `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${isAddress(
     address
   )}/logo.png`
+}
 const BAD_IMAGES = {}
 
 const Image = styled.img`
@@ -33,11 +39,15 @@ const StyledEthereumLogo = styled(EthereumLogo)`
 export default function TokenLogo({ address, size = '1rem', ...rest }) {
   const [error, setError] = useState(false)
 
+  // console.log('REST ===>', address)
+
   let path = ''
   if (address === 'ETH') {
     return <StyledEthereumLogo size={size} />
   } else if (!error && !BAD_IMAGES[address]) {
     path = TOKEN_ICON_API(address.toLowerCase())
+  } else if (socialMoneyMediaMap[address]) {
+    path = socialMoneyMediaMap[address]
   } else {
     return (
       <Emoji {...rest} size={size}>
