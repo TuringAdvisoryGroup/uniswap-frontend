@@ -39,8 +39,6 @@ const StyledEthereumLogo = styled(EthereumLogo)`
 export default function TokenLogo({ address, size = '1rem', ...rest }) {
   const [error, setError] = useState(false)
 
-  // console.log('REST ===>', address)
-
   let path = ''
   if (address === 'ETH') {
     return <StyledEthereumLogo size={size} />

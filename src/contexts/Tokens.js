@@ -29,12 +29,12 @@ const ETH = {
 
 const INITIAL_TOKENS_CONTEXT = {
   1: {
-    // '0x8888889213dd4da823ebdd1e235b09590633c150 ': {
-    //   [NAME]: 'Marblecoin',
-    //   [SYMBOL]: 'MBC',
-    //   [DECIMALS]: 4,
-    //   [EXCHANGE_ADDRESS]: '0xaF51BaAA766b65E8B3Ee0C2c33186325ED01eBEC'
-    // },
+    '0x3867ef780a3afcf1201ef4f2acc6a46e3bd1eb88 ': {
+      [NAME]: 'Color',
+      [SYMBOL]: 'COLR',
+      [DECIMALS]: 4,
+      [EXCHANGE_ADDRESS]: '0x3F0c63dA66457dedc2677BEF6bbdd457BA7A3C0b'
+    },
     '0xdcfe18bc46f5a0cd0d3af0c2155d2bcb5ade2fc5': {
       [NAME]: 'Hue',
       [SYMBOL]: 'HUE',
