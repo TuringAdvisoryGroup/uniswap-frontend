@@ -2,8 +2,9 @@ FROM node:12 AS build
 ARG CURRENT_BRANCH
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
-COPY package.json package-lock.json ./
-RUN npm install --silent
+COPY package.json yarn.lock ./
+RUN npm install -g yarn
+RUN yarn install --silent
 COPY . .
 ENV CURRENT_BRANCH $CURRENT_BRANCH
 ENV NODE_ENV production
