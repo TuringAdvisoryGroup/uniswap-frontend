@@ -29,17 +29,17 @@ const ETH = {
 
 const INITIAL_TOKENS_CONTEXT = {
   1: {
-    '0x3867ef780a3afcf1201ef4f2acc6a46e3bd1eb88 ': {
+    '0x3867ef780a3afcf1201ef4f2acc6a46e3bd1eb88': {
       [NAME]: 'Color',
       [SYMBOL]: 'COLR',
       [DECIMALS]: 4,
       [EXCHANGE_ADDRESS]: '0x3F0c63dA66457dedc2677BEF6bbdd457BA7A3C0b'
     },
-    '0xdcfe18bc46f5a0cd0d3af0c2155d2bcb5ade2fc5': {
+    '0xDcfE18bc46f5A0Cd0d3Af0c2155d2bCB5AdE2fc5': {
       [NAME]: 'Hue',
       [SYMBOL]: 'HUE',
       [DECIMALS]: 4,
-      [EXCHANGE_ADDRESS]: '0xaF51BaAA766b65E8B3Ee0C2c33186325ED01eBEC'
+      [EXCHANGE_ADDRESS]: '0x3fCb35Aada553A888433eFC45dF1B70937A5942D'
     },
     '0x737F98AC8cA59f2C68aD658E3C3d8C8963E40a4c': {
       [NAME]: 'Amon',
