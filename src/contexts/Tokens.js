@@ -39,7 +39,7 @@ const INITIAL_TOKENS_CONTEXT = {
       [NAME]: 'Hue',
       [SYMBOL]: 'HUE',
       [DECIMALS]: 4,
-      [EXCHANGE_ADDRESS]: '0xaF51BaAA766b65E8B3Ee0C2c33186325ED01eBEC'
+      [EXCHANGE_ADDRESS]: '0xdcfe18bc46f5a0cd0d3af0c2155d2bcb5ade2fc5'
     },
     '0x737F98AC8cA59f2C68aD658E3C3d8C8963E40a4c': {
       [NAME]: 'Amon',
