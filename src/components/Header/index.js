@@ -37,10 +37,6 @@ const Title = styled.div`
     cursor: pointer;
   }
 
-  #link {
-    text-decoration-color: ${({ theme }) => theme.rollBlue};
-  }
-
   #title {
     display: inline;
     font-size: 1rem;
