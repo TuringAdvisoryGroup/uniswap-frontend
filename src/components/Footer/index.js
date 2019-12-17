@@ -29,9 +29,6 @@ const Title = styled.div`
   :hover {
     cursor: pointer;
   }
-  #link {
-    text-decoration-color: ${({ theme }) => theme.rollPrimaryBlue};
-  }
 
   #title {
     display: inline;

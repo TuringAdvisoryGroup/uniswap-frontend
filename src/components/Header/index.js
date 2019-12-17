@@ -37,10 +37,6 @@ const Title = styled.div`
     cursor: pointer;
   }
 
-  #link {
-    text-decoration-color: ${({ theme }) => theme.rollBlue};
-  }
-
   #title {
     display: inline;
     font-size: 1rem;
@@ -57,7 +53,7 @@ export default function Header() {
     <HeaderFrame>
       <HeaderElement>
         <Title>
-          <Link id="link" href="https://uniswap.io">
+          <Link id="link" href="https://www.tryroll.com">
             <h1 id="title">Roll - Social Money</h1>
           </Link>
         </Title>

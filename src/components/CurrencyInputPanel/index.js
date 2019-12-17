@@ -666,12 +666,12 @@ const List = ({ list }) => {
   const { tokens, socialMoney, friends } = list
   return (
     <TokenList>
-      <p style={{ paddingLeft: '1rem' }}>Tokens</p>
-      {tokens}
       <p style={{ paddingLeft: '1rem' }}>Social Money</p>
       {socialMoney}
       <p style={{ paddingLeft: '1rem' }}>Friends of Roll</p>
       {friends}
+      <p style={{ paddingLeft: '1rem' }}>Tokens</p>
+      {tokens}
     </TokenList>
   )
 }
