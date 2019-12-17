@@ -23,20 +23,19 @@ jobs:
       - checkout
 
       # Download and cache dependencies
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+      # - restore_cache:
+      #     keys:
+      #       - v1-dependencies-{{ checksum "package.json" }}
+      #       # fallback to using the latest cache if no exact match is found
+      #       - v1-dependencies-
 
-      - run: npm install
+      # - run: npm install
 
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+      # - save_cache:
+      #     paths:
+      #       - node_modules
+      #     key: v1-dependencies-{{ checksum "package.json" }}
 
-      # run tests!
       # - run: npm test
 
   deploy:
@@ -70,7 +69,7 @@ workflows:
           region: AWS_DEFAULT_REGION
           repo: uniswap-exchange
           tag: '${CIRCLE_BRANCH}-ci-latest,${CIRCLE_BRANCH}-ci-${CIRCLE_WORKFLOW_ID}'
-          extra-build-args: "--build-arg CURRENT_BRANCH=${CIRCLE_BRANCH}"
+          extra-build-args: "--build-arg CURRENT_BRANCH=${CIRCLE_BRANCH} --build-arg REACT_APP_NETWORK_URL=${REACT_APP_NETWORK_URL}"
           filters:
             branches:
               only:

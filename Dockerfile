@@ -1,5 +1,6 @@
 FROM node:12 AS build
 ARG CURRENT_BRANCH
+ARG REACT_APP_NETWORK_URL
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json yarn.lock ./
