@@ -5,7 +5,7 @@ import { isAddress } from '../../utils'
 import { ReactComponent as EthereumLogo } from '../../assets/images/ethereum-logo.svg'
 
 const socialMoneyMediaMap = {
-  '0xdcfe18bc46f5a0cd0d3af0c2155d2bcb5ade2fc5':
+  '0xDcfE18bc46f5A0Cd0d3Af0c2155d2bCB5AdE2fc5':
     'https://roll-token.s3.amazonaws.com/HUE/4abc8020-b954-4e08-be20-5f6958735b01'
 }
 
