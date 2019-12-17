@@ -29,7 +29,7 @@ const ETH = {
 
 const INITIAL_TOKENS_CONTEXT = {
   1: {
-    '0x3867ef780a3afcf1201ef4f2acc6a46e3bd1eb88 ': {
+    '0x3867ef780a3afcf1201ef4f2acc6a46e3bd1eb88': {
       [NAME]: 'Color',
       [SYMBOL]: 'COLR',
       [DECIMALS]: 4,
