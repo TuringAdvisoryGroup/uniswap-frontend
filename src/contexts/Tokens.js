@@ -35,11 +35,11 @@ const INITIAL_TOKENS_CONTEXT = {
       [DECIMALS]: 4,
       [EXCHANGE_ADDRESS]: '0x3F0c63dA66457dedc2677BEF6bbdd457BA7A3C0b'
     },
-    '0x3fcb35aada553a888433efc45df1b70937a5942d': {
+    '0xdcfe18bc46f5a0cd0d3af0c2155d2bcb5ade2fc5': {
       [NAME]: 'Hue',
       [SYMBOL]: 'HUE',
       [DECIMALS]: 4,
-      [EXCHANGE_ADDRESS]: '0xdcfe18bc46f5a0cd0d3af0c2155d2bcb5ade2fc5'
+      [EXCHANGE_ADDRESS]: '0x3fcb35aada553a888433efc45df1b70937a5942d'
     },
     '0x737F98AC8cA59f2C68aD658E3C3d8C8963E40a4c': {
       [NAME]: 'Amon',
