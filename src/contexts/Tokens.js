@@ -32,7 +32,7 @@ const INITIAL_TOKENS_CONTEXT = {
     '0x3867ef780a3afcf1201ef4f2acc6a46e3bd1eb88': {
       [NAME]: 'Color',
       [SYMBOL]: 'COLR',
-      [DECIMALS]: 4,
+      [DECIMALS]: 0,
       [EXCHANGE_ADDRESS]: '0x3F0c63dA66457dedc2677BEF6bbdd457BA7A3C0b'
     },
     '0xDcfE18bc46f5A0Cd0d3Af0c2155d2bCB5AdE2fc5': {
