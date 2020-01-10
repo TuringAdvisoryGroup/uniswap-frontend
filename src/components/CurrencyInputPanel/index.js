@@ -25,6 +25,7 @@ import { transparentize } from 'polished'
 import { Spinner } from '../../theme'
 import Circle from '../../assets/images/circle-grey.svg'
 import { useUSDPrice } from '../../contexts/Application'
+import { friendsOfRollMap, socialMoneyMap, tokens } from '../../contexts/Tokens'
 
 const GAS_MARGIN = ethers.utils.bigNumberify(1000)
 
@@ -644,22 +645,6 @@ const TokenRow = ({ token, account, _onTokenSelect }) => {
       </TokenRowRight>
     </TokenModalRow>
   )
-}
-
-const socialMoneyMap = {
-  HUE: true
-}
-
-const friendsOfRollMap = {
-  MBC: true,
-  COLR: true
-}
-
-const tokens = {
-  ETH: true,
-  DAI: true,
-  WETH: true,
-  USDC: true
 }
 
 const List = ({ list }) => {
