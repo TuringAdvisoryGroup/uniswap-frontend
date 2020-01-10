@@ -4,7 +4,7 @@ ARG REACT_APP_NETWORK_URL
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json yarn.lock ./
-RUN npm install -g yarn
+# RUN npm install -g yarn
 RUN yarn install --silent
 COPY . .
 ENV CURRENT_BRANCH $CURRENT_BRANCH
