@@ -11,6 +11,23 @@ import {
   safeAccess
 } from '../utils'
 
+export const socialMoneyMap = {
+  HUE: true
+}
+
+export const friendsOfRollMap = {
+  MBC: true,
+  COLR: true,
+  SLP: true
+}
+
+export const tokens = {
+  ETH: true,
+  DAI: true,
+  WETH: true,
+  USDC: true
+}
+
 const NAME = 'name'
 const SYMBOL = 'symbol'
 const DECIMALS = 'decimals'
@@ -29,6 +46,12 @@ const ETH = {
 
 const INITIAL_TOKENS_CONTEXT = {
   1: {
+    '0x37236cd05b34cc79d3715af2383e96dd7443dcf1': {
+      [NAME]: 'Small Love Potion',
+      [SYMBOL]: 'SLP',
+      [DECIMALS]: 0,
+      [EXCHANGE_ADDRESS]: '0xf4158e282F2317597E31c028978C7fb7275d6Fb4'
+    },
     '0x3867ef780a3afcf1201ef4f2acc6a46e3bd1eb88': {
       [NAME]: 'Color',
       [SYMBOL]: 'COLR',
