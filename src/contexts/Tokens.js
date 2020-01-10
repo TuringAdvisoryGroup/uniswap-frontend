@@ -12,7 +12,8 @@ import {
 } from '../utils'
 
 export const socialMoneyMap = {
-  HUE: true
+  HUE: true,
+  SKULL: true
 }
 
 export const friendsOfRollMap = {
@@ -46,6 +47,12 @@ const ETH = {
 
 const INITIAL_TOKENS_CONTEXT = {
   1: {
+    '0xbcc66ed2ab491e9ae7bf8386541fb17421fa9d35': {
+      [NAME]: 'Skull',
+      [SYMBOL]: 'SKULL',
+      [DECIMALS]: 4,
+      [EXCHANGE_ADDRESS]: '0xae33701b6b48267dB4BB51e472e4E7aB5aAD2e3E'
+    },
     '0x37236cd05b34cc79d3715af2383e96dd7443dcf1': {
       [NAME]: 'Small Love Potion',
       [SYMBOL]: 'SLP',
