@@ -16,13 +16,17 @@ export const socialMoneyMediaMap = {
     'https://roll-token.s3.amazonaws.com/HUE/4abc8020-b954-4e08-be20-5f6958735b01',
   '0x3867ef780a3afcf1201ef4f2acc6a46e3bd1eb88': 'https://roll-token.s3.amazonaws.com/COLR/colr_tokenImage.png',
   '0x37236cd05b34cc79d3715af2383e96dd7443dcf1':
-    'https://user-images.githubusercontent.com/2774509/72005654-2043aa80-321c-11ea-88f7-8fbb8314a959.png'
+    'https://user-images.githubusercontent.com/2774509/72005654-2043aa80-321c-11ea-88f7-8fbb8314a959.png',
+  '0xe6710e0CdA178f3D921f456902707B0d4C4A332B':
+    'https://user-images.githubusercontent.com/2774509/72284859-f4576900-360f-11ea-9240-67d3f8aa8714.png'
 }
 
 export const socialMoneyMap = {
   HUE: true,
   SKULL: true,
-  FORCER: true
+  FORCER: true,
+  ALEX: true,
+  JULIEN: true
 }
 
 export const friendsOfRollMap = {
@@ -56,6 +60,18 @@ const ETH = {
 
 const INITIAL_TOKENS_CONTEXT = {
   1: {
+    '0xe6710e0CdA178f3D921f456902707B0d4C4A332B': {
+      [NAME]: 'Julien',
+      [SYMBOL]: 'JULIEN',
+      [DECIMALS]: 4,
+      [EXCHANGE_ADDRESS]: '0x4cE8d670c0CCEa741829551B347e2eBabdba638F'
+    },
+    '0x8BA6DcC667d3FF64C1A2123cE72FF5F0199E5315': {
+      [NAME]: 'AlexMasmej',
+      [SYMBOL]: 'ALEX',
+      [DECIMALS]: 4,
+      [EXCHANGE_ADDRESS]: '0xB49c53f2E459cE96b04318610aBD77F4E83113dB'
+    },
     '0xc1fb6c015fc535abd331d3029de76a62e412fb23': {
       [NAME]: 'Forcer',
       [SYMBOL]: 'FORCER',
