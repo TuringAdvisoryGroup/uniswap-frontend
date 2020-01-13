@@ -22,7 +22,8 @@ export const socialMoneyMediaMap = {
 export const socialMoneyMap = {
   HUE: true,
   SKULL: true,
-  FORCER: true
+  FORCER: true,
+  ALEX: true
 }
 
 export const friendsOfRollMap = {
@@ -56,6 +57,12 @@ const ETH = {
 
 const INITIAL_TOKENS_CONTEXT = {
   1: {
+    '0x8BA6DcC667d3FF64C1A2123cE72FF5F0199E5315': {
+      [NAME]: 'AlexMasmej',
+      [SYMBOL]: 'ALEX',
+      [DECIMALS]: 4,
+      [EXCHANGE_ADDRESS]: '0xB49c53f2E459cE96b04318610aBD77F4E83113dB'
+    },
     '0xc1fb6c015fc535abd331d3029de76a62e412fb23': {
       [NAME]: 'Forcer',
       [SYMBOL]: 'FORCER',
