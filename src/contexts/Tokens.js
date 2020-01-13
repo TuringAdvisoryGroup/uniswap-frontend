@@ -23,7 +23,8 @@ export const socialMoneyMap = {
   HUE: true,
   SKULL: true,
   FORCER: true,
-  ALEX: true
+  ALEX: true,
+  JULIEN: true
 }
 
 export const friendsOfRollMap = {
@@ -57,6 +58,12 @@ const ETH = {
 
 const INITIAL_TOKENS_CONTEXT = {
   1: {
+    '0xe6710e0CdA178f3D921f456902707B0d4C4A332B': {
+      [NAME]: 'Julien',
+      [SYMBOL]: 'JULIEN',
+      [DECIMALS]: 4,
+      [EXCHANGE_ADDRESS]: '0x4cE8d670c0CCEa741829551B347e2eBabdba638F'
+    },
     '0x8BA6DcC667d3FF64C1A2123cE72FF5F0199E5315': {
       [NAME]: 'AlexMasmej',
       [SYMBOL]: 'ALEX',
