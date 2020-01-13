@@ -16,7 +16,9 @@ export const socialMoneyMediaMap = {
     'https://roll-token.s3.amazonaws.com/HUE/4abc8020-b954-4e08-be20-5f6958735b01',
   '0x3867ef780a3afcf1201ef4f2acc6a46e3bd1eb88': 'https://roll-token.s3.amazonaws.com/COLR/colr_tokenImage.png',
   '0x37236cd05b34cc79d3715af2383e96dd7443dcf1':
-    'https://user-images.githubusercontent.com/2774509/72005654-2043aa80-321c-11ea-88f7-8fbb8314a959.png'
+    'https://user-images.githubusercontent.com/2774509/72005654-2043aa80-321c-11ea-88f7-8fbb8314a959.png',
+  '0xe6710e0CdA178f3D921f456902707B0d4C4A332B':
+    'https://user-images.githubusercontent.com/2774509/72284859-f4576900-360f-11ea-9240-67d3f8aa8714.png'
 }
 
 export const socialMoneyMap = {
