@@ -12,13 +12,7 @@ import {
 } from '../utils'
 
 export const socialMoneyMediaMap = {
-  '0xdcfe18bc46f5a0cd0d3af0c2155d2bcb5ade2fc5':
-    'https://roll-token.s3.amazonaws.com/HUE/4abc8020-b954-4e08-be20-5f6958735b01',
-  '0x3867ef780a3afcf1201ef4f2acc6a46e3bd1eb88': 'https://roll-token.s3.amazonaws.com/COLR/colr_tokenImage.png',
-  '0x37236cd05b34cc79d3715af2383e96dd7443dcf1':
-    'https://user-images.githubusercontent.com/2774509/72005654-2043aa80-321c-11ea-88f7-8fbb8314a959.png',
-  '0xe6710e0CdA178f3D921f456902707B0d4C4A332B':
-    'https://user-images.githubusercontent.com/2774509/72284859-f4576900-360f-11ea-9240-67d3f8aa8714.png'
+  '0x3867ef780a3afcf1201ef4f2acc6a46e3bd1eb88': 'https://roll-token.s3.amazonaws.com/COLR/colr_tokenImage.png'
 }
 
 export const socialMoneyMap = {
@@ -26,7 +20,8 @@ export const socialMoneyMap = {
   SKULL: true,
   FORCER: true,
   ALEX: true,
-  JULIEN: true
+  JULIEN: true,
+  CALVIN: true
 }
 
 export const friendsOfRollMap = {
@@ -60,6 +55,12 @@ const ETH = {
 
 const INITIAL_TOKENS_CONTEXT = {
   1: {
+    '0xdc8092AaF83e00Ebf9B01A2e90b7B7eF867ba503': {
+      [NAME]: 'Calvin',
+      [SYMBOL]: 'CALVIN',
+      [DECIMALS]: 4,
+      [EXCHANGE_ADDRESS]: '0x657de502Ee9feD80d5496A1dA0007Fe72B2bd18B'
+    },
     '0xe6710e0CdA178f3D921f456902707B0d4C4A332B': {
       [NAME]: 'Julien',
       [SYMBOL]: 'JULIEN',
