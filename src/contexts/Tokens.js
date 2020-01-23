@@ -12,7 +12,9 @@ import {
 } from '../utils'
 
 export const socialMoneyMediaMap = {
-  '0x3867ef780a3afcf1201ef4f2acc6a46e3bd1eb88': 'https://roll-token.s3.amazonaws.com/COLR/colr_tokenImage.png'
+  '0x3867ef780a3afcf1201ef4f2acc6a46e3bd1eb88': 'https://roll-token.s3.amazonaws.com/COLR/colr_tokenImage.png',
+  '0xfc1e690f61efd961294b3e1ce3313fbd8aa4f85d':
+    'https://user-images.githubusercontent.com/24559073/73027994-92aeb000-3e02-11ea-9aa6-43b0eefda03c.png'
 }
 
 export const socialMoneyMap = {
@@ -34,7 +36,8 @@ export const tokens = {
   ETH: true,
   DAI: true,
   WETH: true,
-  USDC: true
+  USDC: true,
+  aDAI: true
 }
 
 const NAME = 'name'
@@ -55,6 +58,12 @@ const ETH = {
 
 const INITIAL_TOKENS_CONTEXT = {
   1: {
+    '0xfc1e690f61efd961294b3e1ce3313fbd8aa4f85d': {
+      [NAME]: 'Aave Interest bearing DAI',
+      [SYMBOL]: 'aDAI',
+      [DECIMALS]: 18,
+      [EXCHANGE_ADDRESS]: '0x7cfab87AaC0899c093235b342AC0e5B1ACF159EB'
+    },
     '0xdc8092AaF83e00Ebf9B01A2e90b7B7eF867ba503': {
       [NAME]: 'Calvin',
       [SYMBOL]: 'CALVIN',
