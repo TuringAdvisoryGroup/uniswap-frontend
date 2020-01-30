@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router'
-import { useWeb3Context } from 'web3-react'
 import { createBrowserHistory } from 'history'
 import { ethers } from 'ethers'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 import ReactGA from 'react-ga'
+
+import { useWeb3React, useFactoryContract } from '../../hooks'
 import { Button } from '../../theme'
 import AddressInputPanel from '../../components/AddressInputPanel'
 import OversizedPanel from '../../components/OversizedPanel'
-import { useFactoryContract } from '../../hooks'
 import { useTokenDetails } from '../../contexts/Tokens'
 import { useTransactionAdder } from '../../contexts/Transactions'
 
@@ -56,7 +56,8 @@ const Flex = styled.div`
 
 function CreateExchange({ location, params }) {
   const { t } = useTranslation()
-  const { account } = useWeb3Context()
+  const { account } = useWeb3React()
+
   const factory = useFactoryContract()
 
   const [tokenAddress, setTokenAddress] = useState({
@@ -103,8 +104,8 @@ function CreateExchange({ location, params }) {
 
     factory.createExchange(tokenAddress.address, { gasLimit: estimatedGasLimit }).then(response => {
       ReactGA.event({
-        category: 'Pool',
-        action: 'CreateExchange'
+        category: 'Transaction',
+        action: 'Create Exchange'
       })
 
       addTransaction(response)

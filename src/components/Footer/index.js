@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactGA from 'react-ga'
 import styled from 'styled-components'
 import { darken, transparentize } from 'polished'
 import Toggle from 'react-switch'
