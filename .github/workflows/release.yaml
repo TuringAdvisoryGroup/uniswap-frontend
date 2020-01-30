@@ -23,7 +23,7 @@ jobs:
       - run: yarn
       - run: yarn build
         env:
-          REACT_APP_NETWORK_ID: ${{ secrets.REACT_APP_NETWORK_ID }}
+          REACT_APP_CHAIN_ID: ${{ secrets.REACT_APP_NETWORK_ID }}
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1.0.0
