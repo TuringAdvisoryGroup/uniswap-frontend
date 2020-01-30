@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { ethers } from 'ethers'
 import { BigNumber } from '@uniswap/sdk'
-import { useWeb3Context } from 'web3-react'
 import styled from 'styled-components'
 import escapeStringRegex from 'escape-string-regexp'
 import { darken } from 'polished'
@@ -12,20 +11,22 @@ import '@reach/tooltip/styles.css'
 import { isMobile } from 'react-device-detect'
 
 import { BorderlessInput } from '../../theme'
-import { useTokenContract } from '../../hooks'
+import { useWeb3React, useTokenContract } from '../../hooks'
 import { isAddress, calculateGasMargin, formatToUsd, formatTokenBalance, formatEthBalance } from '../../utils'
 import { ReactComponent as DropDown } from '../../assets/images/dropdown.svg'
 import Modal from '../Modal'
 import TokenLogo from '../TokenLogo'
 import SearchIcon from '../../assets/images/magnifying-glass.svg'
 import { useTransactionAdder, usePendingApproval } from '../../contexts/Transactions'
-import { useTokenDetails, useAllTokenDetails } from '../../contexts/Tokens'
+import { useTokenDetails, useAllTokenDetails, INITIAL_TOKENS_CONTEXT } from '../../contexts/Tokens'
+import { useAddressBalance } from '../../contexts/Balances'
 import { ReactComponent as Close } from '../../assets/images/x.svg'
 import { transparentize } from 'polished'
 import { Spinner } from '../../theme'
 import Circle from '../../assets/images/circle-grey.svg'
-import { useUSDPrice } from '../../contexts/Application'
+// import { useUSDPrice } from '../../contexts/Application'
 import { friendsOfRollMap, socialMoneyMap, tokens } from '../../contexts/Tokens'
+import { useETHPriceInUSD, useAllBalances } from '../../contexts/Balances'
 
 const GAS_MARGIN = ethers.utils.bigNumberify(1000)
 
@@ -218,7 +219,10 @@ const TokenModalRow = styled.div`
     background-color: ${({ theme }) => theme.tokenRowHover};
   }
 
-  ${({ theme }) => theme.mediaWidth.upToMedium`padding: 0.8rem 1rem;`}
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    padding: 0.8rem 1rem;
+    padding-right: 2rem;
+  `}
 `
 
 const TokenRowLeft = styled.div`
@@ -233,6 +237,10 @@ const TokenSymbolGroup = styled.div`
 
 const TokenFullName = styled.div`
   color: ${({ theme }) => theme.chaliceGray};
+`
+
+const FadedSpan = styled.span`
+  color: ${({ theme }) => theme.royalBlue};
 `
 
 const TokenRowBalance = styled.div`
@@ -275,7 +283,8 @@ export default function CurrencyInputPanel({
   disableTokenSelect,
   selectedTokenAddress = '',
   showUnlock,
-  value
+  value,
+  urlAddedTokens
 }) {
   const { t } = useTranslation()
 
@@ -290,6 +299,10 @@ export default function CurrencyInputPanel({
 
   const allTokens = useAllTokenDetails()
 
+  const { account } = useWeb3React()
+
+  const userTokenBalance = useAddressBalance(account, selectedTokenAddress)
+
   function renderUnlockButton() {
     if (disableUnlock || !showUnlock || selectedTokenAddress === 'ETH' || !selectedTokenAddress) {
       return null
@@ -298,14 +311,26 @@ export default function CurrencyInputPanel({
         return (
           <SubCurrencySelect
             onClick={async () => {
-              const estimatedGas = await tokenContract.estimate.approve(
-                selectedTokenExchangeAddress,
-                ethers.constants.MaxUint256
-              )
-              tokenContract
-                .approve(selectedTokenExchangeAddress, ethers.constants.MaxUint256, {
-                  gasLimit: calculateGasMargin(estimatedGas, GAS_MARGIN)
+              let estimatedGas
+              let useUserBalance = false
+              estimatedGas = await tokenContract.estimate
+                .approve(selectedTokenExchangeAddress, ethers.constants.MaxUint256)
+                .catch(e => {
+                  console.log('Error setting max token approval.')
                 })
+              if (!estimatedGas) {
+                // general fallback for tokens who restrict approval amounts
+                estimatedGas = await tokenContract.estimate.approve(selectedTokenExchangeAddress, userTokenBalance)
+                useUserBalance = true
+              }
+              tokenContract
+                .approve(
+                  selectedTokenExchangeAddress,
+                  useUserBalance ? userTokenBalance : ethers.constants.MaxUint256,
+                  {
+                    gasLimit: calculateGasMargin(estimatedGas, GAS_MARGIN)
+                  }
+                )
                 .then(response => {
                   addTransaction(response, { approval: selectedTokenAddress })
                 })
@@ -403,10 +428,10 @@ export default function CurrencyInputPanel({
       {!disableTokenSelect && (
         <CurrencySelectModal
           isOpen={modalIsOpen}
-          // isOpen={true}
           onDismiss={() => {
             setModalIsOpen(false)
           }}
+          urlAddedTokens={urlAddedTokens}
           onTokenSelect={onCurrencySelected}
           allBalances={allBalances}
         />
@@ -415,7 +440,7 @@ export default function CurrencyInputPanel({
   )
 }
 
-function CurrencySelectModal({ isOpen, onDismiss, onTokenSelect, allBalances }) {
+function CurrencySelectModal({ isOpen, onDismiss, onTokenSelect, urlAddedTokens }) {
   const { t } = useTranslation()
 
   const [searchQuery, setSearchQuery] = useState('')
@@ -423,22 +448,33 @@ function CurrencySelectModal({ isOpen, onDismiss, onTokenSelect, allBalances }) 
 
   const allTokens = useAllTokenDetails()
 
-  const { account } = useWeb3Context()
+  const { account, chainId } = useWeb3React()
 
   // BigNumber.js instance
-  const ethPrice = useUSDPrice()
+  const ethPrice = useETHPriceInUSD()
+
+  // all balances for both account and exchanges
+  let allBalances = useAllBalances()
 
   const _usdAmounts = Object.keys(allTokens).map(k => {
-    if (
-      ethPrice &&
-      allBalances &&
-      allBalances[k] &&
-      allBalances[k].ethRate &&
-      !allBalances[k].ethRate.isNaN() &&
-      allBalances[k].balance
-    ) {
-      const USDRate = ethPrice.times(allBalances[k].ethRate)
-      const balanceBigNumber = new BigNumber(allBalances[k].balance.toString())
+    if (ethPrice && allBalances[account] && allBalances[account][k] && allBalances[account][k].value) {
+      let ethRate = 1 // default for ETH
+      let exchangeDetails = allBalances[allTokens[k].exchangeAddress]
+      if (
+        exchangeDetails &&
+        exchangeDetails[k] &&
+        exchangeDetails[k].value &&
+        exchangeDetails['ETH'] &&
+        exchangeDetails['ETH'].value
+      ) {
+        const tokenBalance = new BigNumber(exchangeDetails[k].value.toString())
+        const ethBalance = new BigNumber(exchangeDetails['ETH'].value.toString())
+        ethRate = ethBalance.div(tokenBalance)
+      }
+      const USDRate = ethPrice
+        .times(ethRate)
+        .times(new BigNumber(10).pow(allTokens[k].decimals).div(new BigNumber(10).pow(18)))
+      const balanceBigNumber = new BigNumber(allBalances[account][k].value.toString())
       const usdBalance = balanceBigNumber.times(USDRate).div(new BigNumber(10).pow(allTokens[k].decimals))
       return usdBalance
     } else {
@@ -455,38 +491,45 @@ function CurrencySelectModal({ isOpen, onDismiss, onTokenSelect, allBalances }) 
   const tokenList = useMemo(() => {
     return Object.keys(allTokens)
       .sort((a, b) => {
-        const aSymbol = allTokens[a].symbol.toLowerCase()
-        const bSymbol = allTokens[b].symbol.toLowerCase()
+        if (allTokens[a].symbol && allTokens[b].symbol) {
+          const aSymbol = allTokens[a].symbol.toLowerCase()
+          const bSymbol = allTokens[b].symbol.toLowerCase()
 
-        if (aSymbol === 'ETH'.toLowerCase() || bSymbol === 'ETH'.toLowerCase()) {
-          return aSymbol === bSymbol ? 0 : aSymbol === 'ETH'.toLowerCase() ? -1 : 1
+          // pin ETH to top
+          if (aSymbol === 'ETH'.toLowerCase() || bSymbol === 'ETH'.toLowerCase()) {
+            return aSymbol === bSymbol ? 0 : aSymbol === 'ETH'.toLowerCase() ? -1 : 1
+          }
+
+          // then tokens with balance
+          if (usdAmounts[a] && !usdAmounts[b]) {
+            return -1
+          } else if (usdAmounts[b] && !usdAmounts[a]) {
+            return 1
+          }
+
+          // sort by balance
+          if (usdAmounts[a] && usdAmounts[b]) {
+            const aUSD = usdAmounts[a]
+            const bUSD = usdAmounts[b]
+
+            return aUSD.gt(bUSD) ? -1 : aUSD.lt(bUSD) ? 1 : 0
+          }
+
+          // sort alphabetically
+          return aSymbol < bSymbol ? -1 : aSymbol > bSymbol ? 1 : 0
+        } else {
+          return 0
         }
-
-        if (usdAmounts[a] && !usdAmounts[b]) {
-          return -1
-        } else if (usdAmounts[b] && !usdAmounts[a]) {
-          return 1
-        }
-
-        // check for balance - sort by value
-        if (usdAmounts[a] && usdAmounts[b]) {
-          const aUSD = usdAmounts[a]
-          const bUSD = usdAmounts[b]
-
-          return aUSD.gt(bUSD) ? -1 : aUSD.lt(bUSD) ? 1 : 0
-        }
-
-        return aSymbol < bSymbol ? -1 : aSymbol > bSymbol ? 1 : 0
       })
       .map(k => {
         let balance
         let usdBalance
         // only update if we have data
-        if (k === 'ETH' && allBalances && allBalances[k]) {
-          balance = formatEthBalance(allBalances[k].balance)
+        if (k === 'ETH' && allBalances[account] && allBalances[account][k] && allBalances[account][k].value) {
+          balance = formatEthBalance(allBalances[account][k].value)
           usdBalance = usdAmounts[k]
-        } else if (allBalances && allBalances[k]) {
-          balance = formatTokenBalance(allBalances[k].balance, allTokens[k].decimals)
+        } else if (allBalances[account] && allBalances[account][k] && allBalances[account][k].value) {
+          balance = formatTokenBalance(allBalances[account][k].value, allTokens[k].decimals)
           usdBalance = usdAmounts[k]
         }
         return {
@@ -497,18 +540,27 @@ function CurrencySelectModal({ isOpen, onDismiss, onTokenSelect, allBalances }) 
           usdBalance: usdBalance
         }
       })
-  }, [allBalances, allTokens, usdAmounts])
+  }, [allBalances, allTokens, usdAmounts, account])
 
   const filteredTokenList = useMemo(() => {
     return tokenList.filter(tokenEntry => {
+      const inputIsAddress = searchQuery.slice(0, 2) === '0x'
+
       // check the regex for each field
       const regexMatches = Object.keys(tokenEntry).map(tokenEntryKey => {
+        // if address field only search if input starts with 0x
+        if (tokenEntryKey === 'address') {
+          return (
+            inputIsAddress &&
+            typeof tokenEntry[tokenEntryKey] === 'string' &&
+            !!tokenEntry[tokenEntryKey].match(new RegExp(escapeStringRegex(searchQuery), 'i'))
+          )
+        }
         return (
           typeof tokenEntry[tokenEntryKey] === 'string' &&
           !!tokenEntry[tokenEntryKey].match(new RegExp(escapeStringRegex(searchQuery), 'i'))
         )
       })
-
       return regexMatches.some(m => m)
     })
   }, [tokenList, searchQuery])
@@ -576,6 +628,50 @@ function CurrencySelectModal({ isOpen, onDismiss, onTokenSelect, allBalances }) 
         friends: []
       }
     )
+
+    // return filteredTokenList.map(({ address, symbol, name, balance, usdBalance }) => {
+    //   const urlAdded = urlAddedTokens && urlAddedTokens.hasOwnProperty(address)
+    //   const customAdded =
+    //     address !== 'ETH' &&
+    //     INITIAL_TOKENS_CONTEXT[chainId] &&
+    //     !INITIAL_TOKENS_CONTEXT[chainId].hasOwnProperty(address) &&
+    //     !urlAdded
+
+    //   return (
+    //     <TokenModalRow key={address} onClick={() => _onTokenSelect(address)}>
+    //       <TokenRowLeft>
+    //         <TokenLogo address={address} size={'2rem'} />
+    //         <TokenSymbolGroup>
+    //           <div>
+    //             <span id="symbol">{symbol}</span>
+    //             <FadedSpan>
+    //               {urlAdded && '(Added by URL)'} {customAdded && '(Added by user)'}
+    //             </FadedSpan>
+    //           </div>
+    //           <TokenFullName> {name}</TokenFullName>
+    //         </TokenSymbolGroup>
+    //       </TokenRowLeft>
+    //       <TokenRowRight>
+    //         {balance ? (
+    //           <TokenRowBalance>{balance && (balance > 0 || balance === '<0.0001') ? balance : '-'}</TokenRowBalance>
+    //         ) : account ? (
+    //           <SpinnerWrapper src={Circle} alt="loader" />
+    //         ) : (
+    //           '-'
+    //         )}
+    //         <TokenRowUsd>
+    //           {usdBalance && !usdBalance.isNaN()
+    //             ? usdBalance.isZero()
+    //               ? ''
+    //               : usdBalance.lt(0.01)
+    //               ? '<$0.01'
+    //               : '$' + formatToUsd(usdBalance)
+    //             : ''}
+    //         </TokenRowUsd>
+    //       </TokenRowRight>
+    //     </TokenModalRow>
+    //   )
+    // })
   }
 
   // manage focus on modal show
@@ -597,6 +693,7 @@ function CurrencySelectModal({ isOpen, onDismiss, onTokenSelect, allBalances }) 
       isOpen={isOpen}
       onDismiss={clearInputAndDismiss}
       minHeight={60}
+      maxHeight={50}
       initialFocusRef={isMobile ? undefined : inputRef}
     >
       <TokenModal>
