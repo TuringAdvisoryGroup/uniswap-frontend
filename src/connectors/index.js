@@ -12,8 +12,6 @@ const NETWORK_URL =
     ? process.env.REACT_APP_NETWORK_URL_PROD
     : process.env.REACT_APP_NETWORK_URL
 
-console.log('CHAIN ID ==>', process.env.REACT_APP_CHAIN_ID)
-
 export const network = new NetworkConnector({
   urls: { [Number(process.env.REACT_APP_CHAIN_ID)]: NETWORK_URL },
   pollingInterval: POLLING_INTERVAL * 3
