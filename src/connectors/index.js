@@ -12,6 +12,8 @@ const NETWORK_URL =
     ? process.env.REACT_APP_NETWORK_URL_PROD
     : process.env.REACT_APP_NETWORK_URL
 
+console.log('CHAIN ID ==>', process.env.REACT_APP_CHAIN_ID)
+
 export const network = new NetworkConnector({
   urls: { [Number(process.env.REACT_APP_CHAIN_ID)]: NETWORK_URL },
   pollingInterval: POLLING_INTERVAL * 3
@@ -48,3 +50,9 @@ export const walletlink = new WalletLinkConnector({
   appLogoUrl:
     'https://mpng.pngfly.com/20181202/bex/kisspng-emoji-domain-unicorn-pin-badges-sticker-unicorn-tumblr-emoji-unicorn-iphoneemoji-5c046729264a77.5671679315437924251569.jpg'
 })
+
+// every time a user sign up, store the domain
+
+// user@a
+// user@b
+// user@c
