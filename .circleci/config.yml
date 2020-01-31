@@ -21,39 +21,35 @@ jobs:
 
     steps:
       - checkout
-
       # Download and cache dependencies
       # - restore_cache:
       #     keys:
       #       - v1-dependencies-{{ checksum "package.json" }}
       #       # fallback to using the latest cache if no exact match is found
       #       - v1-dependencies-
-
       # - run: npm install
-
       # - save_cache:
       #     paths:
       #       - node_modules
       #     key: v1-dependencies-{{ checksum "package.json" }}
-
       # - run: npm test
 
   deploy:
     working_directory: ~/repo
 
     docker:
-    - image: tryroll/circleci:latest
+      - image: tryroll/circleci:latest
 
     steps:
-    - checkout
+      - checkout
 
-    - run:
-        name: Select environment
-        command: make -f cloud.mk select-environment
+      - run:
+          name: Select environment
+          command: make -f cloud.mk select-environment
 
-    - run:
-        name: K8s deploy
-        command: make -f cloud.mk k8s-eks-apply
+      - run:
+          name: K8s deploy
+          command: make -f cloud.mk k8s-eks-apply
 
 workflows:
   test_and_deploy:
@@ -69,7 +65,7 @@ workflows:
           region: AWS_DEFAULT_REGION
           repo: uniswap-exchange
           tag: '${CIRCLE_BRANCH}-ci-latest,${CIRCLE_BRANCH}-ci-${CIRCLE_WORKFLOW_ID}'
-          extra-build-args: "--build-arg CURRENT_BRANCH=${CIRCLE_BRANCH} --build-arg REACT_APP_NETWORK_URL=${REACT_APP_NETWORK_URL}"
+          extra-build-args: '--build-arg CURRENT_BRANCH=${CIRCLE_BRANCH} --build-arg REACT_APP_NETWORK_URL=${REACT_APP_NETWORK_URL}'
           filters:
             branches:
               only:

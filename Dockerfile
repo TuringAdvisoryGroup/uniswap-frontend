@@ -9,6 +9,7 @@ RUN yarn install --silent
 COPY . .
 ENV CURRENT_BRANCH $CURRENT_BRANCH
 ENV NODE_ENV production
+ENV REACT_APP_CHAIN_ID 1
 RUN npm run build
 
 # production environment
