@@ -35,8 +35,6 @@ export const fortmatic = new FortmaticConnector({
   chainId: 1
 })
 
-console.log('PORTIS ID: ', process.env.REACT_APP_PORTIS_ID)
-
 // mainnet only
 export const portis = new PortisConnector({
   dAppId: process.env.REACT_APP_PORTIS_ID,
