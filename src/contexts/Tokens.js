@@ -28,7 +28,8 @@ export const socialMoneyMap = {
 export const friendsOfRollMap = {
   MBC: true,
   COLR: true,
-  SLP: true
+  SLP: true,
+  RCLE: true
 }
 
 export const tokens = {
@@ -57,6 +58,12 @@ const ETH = {
 
 export const INITIAL_TOKENS_CONTEXT = {
   1: {
+    '0x5a844590c5b8f40ae56190771d06c60b9ab1da1c': {
+      [NAME]: 'Ross Campbell Legal Engineering',
+      [SYMBOL]: 'RCLE',
+      [DECIMALS]: 18,
+      [EXCHANGE_ADDRESS]: '0xd994b83F2Fca809704D6819935D89f3d0f5DE555'
+    },
     '0xB6eD7644C69416d67B522e20bC294A9a9B405B31': {
       [NAME]: '0xBitcoin Token',
       [SYMBOL]: '0xBTC',
