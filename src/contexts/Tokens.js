@@ -22,7 +22,8 @@ export const socialMoneyMap = {
   FORCER: true,
   ALEX: true,
   JULIEN: true,
-  CALVIN: true
+  CALVIN: true,
+  SCOTT: true
 }
 
 export const friendsOfRollMap = {
@@ -58,6 +59,12 @@ const ETH = {
 
 export const INITIAL_TOKENS_CONTEXT = {
   1: {
+    '0x27fD686Db10E0aE047fe8FE1DE9830C0e0dC3CFA': {
+      [NAME]: 'Scott',
+      [SYMBOL]: 'SCOTT',
+      [DECIMALS]: 4,
+      [EXCHANGE_ADDRESS]: '0x76F455C38AB1FeF84cF27F51065eE1374Fa400e5'
+    },
     '0x5a844590c5b8f40ae56190771d06c60b9ab1da1c': {
       [NAME]: 'Ross Campbell Legal Engineering',
       [SYMBOL]: 'RCLE',
