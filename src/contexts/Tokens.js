@@ -25,7 +25,8 @@ export const socialMoneyMap = {
   CALVIN: true,
   SCOTT: true,
   PAUL: true,
-  RDR: true
+  RDR: true,
+  CAMI: true
 }
 
 export const friendsOfRollMap = {
@@ -61,6 +62,12 @@ const ETH = {
 
 export const INITIAL_TOKENS_CONTEXT = {
   1: {
+    '0xA809CeDeE9B61956c768EAa10272dd5E0FD1A985': {
+      [NAME]: 'CAMI',
+      [SYMBOL]: 'CAMI',
+      [DECIMALS]: 4,
+      [EXCHANGE_ADDRESS]: '0x36BFbEDc15f822A78940965EbB772A55b6A38A81'
+    },
     '0x3C9Ca73d5309d38c6F2C21b78b9aE1f4b2441188': {
       [NAME]: 'RADAR',
       [SYMBOL]: 'RDR',
