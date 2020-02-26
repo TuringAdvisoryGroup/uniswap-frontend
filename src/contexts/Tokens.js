@@ -27,7 +27,8 @@ export const socialMoneyMap = {
   PAUL: true,
   RDR: true,
   CAMI: true,
-  TING: true
+  TING: true,
+  GCASH: true
 }
 
 export const friendsOfRollMap = {
@@ -63,6 +64,12 @@ const ETH = {
 
 export const INITIAL_TOKENS_CONTEXT = {
   1: {
+    '0xc53f6C2Ac35D30cc47Ddf3C320874b21dFA38791': {
+      [NAME]: 'Gcash',
+      [SYMBOL]: 'GCASH',
+      [DECIMALS]: 4,
+      [EXCHANGE_ADDRESS]: '0x3e3fd9230518ba8644df5b48423e2be5e6016540'
+    },
     '0xd1b183f425f7e6a0c83ab1cd84cfde2d84ba049d': {
       [NAME]: 'Tingles',
       [SYMBOL]: 'TING',
