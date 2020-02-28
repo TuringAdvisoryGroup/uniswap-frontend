@@ -64,6 +64,12 @@ const ETH = {
 
 export const INITIAL_TOKENS_CONTEXT = {
   1: {
+    '0x25859743ED0861665611B81E47682e889b48313B': {
+      [NAME]: 'Yumi',
+      [SYMBOL]: 'YUMI',
+      [DECIMALS]: 4,
+      [EXCHANGE_ADDRESS]: '0xd608bA0e93805B2b860794eCAeB1Ed9b905E4f95'
+    },
     '0x4317Ea4820F8D9ea6A103553A89Cb261B6Ea7F2a': {
       [NAME]: 'Alxocity',
       [SYMBOL]: 'ALXO',
