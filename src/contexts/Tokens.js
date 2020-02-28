@@ -28,7 +28,10 @@ export const socialMoneyMap = {
   RDR: true,
   CAMI: true,
   TING: true,
-  GCASH: true
+  GCASH: true,
+  ALXO: true,
+  YUMI: true,
+  SCB: true
 }
 
 export const friendsOfRollMap = {
