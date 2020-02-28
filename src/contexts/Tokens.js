@@ -64,6 +64,12 @@ const ETH = {
 
 export const INITIAL_TOKENS_CONTEXT = {
   1: {
+    '0x4317Ea4820F8D9ea6A103553A89Cb261B6Ea7F2a': {
+      [NAME]: 'Alxocity',
+      [SYMBOL]: 'ALXO',
+      [DECIMALS]: 4,
+      [EXCHANGE_ADDRESS]: '0xcf66ECD1b425B5C3E34BDfB2c0CdE3434cb64771'
+    },
     '0xc53f6C2Ac35D30cc47Ddf3C320874b21dFA38791': {
       [NAME]: 'Gcash',
       [SYMBOL]: 'GCASH',
