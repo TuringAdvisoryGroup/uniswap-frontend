@@ -30,8 +30,8 @@ export const socialMoneyMap = {
   TING: true,
   GCASH: true,
   ALXO: true,
-  YUMI: true,
-  SCB: true
+  YUMI: true
+  // SCB: true
 }
 
 export const friendsOfRollMap = {
@@ -67,12 +67,12 @@ const ETH = {
 
 export const INITIAL_TOKENS_CONTEXT = {
   1: {
-    '0x8AAA0D43cc86ed98b7aA9c8e1f87A319Cd873DC4': {
-      [NAME]: 'SCB',
-      [SYMBOL]: 'SCB',
-      [DECIMALS]: 4,
-      [EXCHANGE_ADDRESS]: '0x51083Be1C8fFBedCeC56F28AA41B6707310AC489'
-    },
+    // '0x8AAA0D43cc86ed98b7aA9c8e1f87A319Cd873DC4': {
+    //   [NAME]: 'SCB',
+    //   [SYMBOL]: 'SCB',
+    //   [DECIMALS]: 4,
+    //   [EXCHANGE_ADDRESS]: '0x51083Be1C8fFBedCeC56F28AA41B6707310AC489'
+    // },
     '0x25859743ED0861665611B81E47682e889b48313B': {
       [NAME]: 'Yumi',
       [SYMBOL]: 'YUMI',
