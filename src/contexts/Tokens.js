@@ -32,8 +32,7 @@ export const socialMoneyMap = {
   ALXO: true,
   YUMI: true,
   WGM: true,
-  PYGOZ: true,
-  ALXO: true
+  PYGOZ: true
 
   // SCB: true
 }
