@@ -30,7 +30,8 @@ export const socialMoneyMap = {
   TING: true,
   GCASH: true,
   ALXO: true,
-  YUMI: true
+  YUMI: true,
+  WGM: true
   // SCB: true
 }
 
@@ -73,6 +74,12 @@ export const INITIAL_TOKENS_CONTEXT = {
     //   [DECIMALS]: 4,
     //   [EXCHANGE_ADDRESS]: '0x51083Be1C8fFBedCeC56F28AA41B6707310AC489'
     // },
+    '0x219803d17f3067eb53d521ba8948d2734f402f7d': {
+      [NAME]: 'WGM',
+      [SYMBOL]: 'WGM',
+      [DECIMALS]: 4,
+      [EXCHANGE_ADDRESS]: '0x4ee32485431b366bb7e8a3a200954265c5f7cd57'
+    },
     '0x25859743ED0861665611B81E47682e889b48313B': {
       [NAME]: 'Yumi',
       [SYMBOL]: 'YUMI',
