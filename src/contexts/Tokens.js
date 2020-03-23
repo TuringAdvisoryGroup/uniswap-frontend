@@ -31,7 +31,8 @@ export const socialMoneyMap = {
   GCASH: true,
   ALXO: true,
   YUMI: true,
-  WGM: true
+  WGM: true,
+  PYGOZ: true
   // SCB: true
 }
 
@@ -74,6 +75,12 @@ export const INITIAL_TOKENS_CONTEXT = {
     //   [DECIMALS]: 4,
     //   [EXCHANGE_ADDRESS]: '0x51083Be1C8fFBedCeC56F28AA41B6707310AC489'
     // },
+    '0xbB98Fc1fD1080D2B8bdaD75c51D30B50c6F59b62': {
+      [NAME]: 'PYGOZ',
+      [SYMBOL]: 'PYGOZ',
+      [DECIMALS]: 4,
+      [EXCHANGE_ADDRESS]: '0xA8566d5ad1Ba44Cd763d8Ba8846310a7b12E5647'
+    },
     '0x219803d17f3067eb53d521ba8948d2734f402f7d': {
       [NAME]: 'WGM',
       [SYMBOL]: 'WGM',
