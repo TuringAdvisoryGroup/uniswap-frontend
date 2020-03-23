@@ -32,7 +32,9 @@ export const socialMoneyMap = {
   ALXO: true,
   YUMI: true,
   WGM: true,
-  PYGOZ: true
+  PYGOZ: true,
+  ALXO: true
+
   // SCB: true
 }
 
@@ -75,6 +77,7 @@ export const INITIAL_TOKENS_CONTEXT = {
     //   [DECIMALS]: 4,
     //   [EXCHANGE_ADDRESS]: '0x51083Be1C8fFBedCeC56F28AA41B6707310AC489'
     // },
+
     '0xbB98Fc1fD1080D2B8bdaD75c51D30B50c6F59b62': {
       [NAME]: 'PYGOZ',
       [SYMBOL]: 'PYGOZ',
