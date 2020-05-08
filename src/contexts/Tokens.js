@@ -13,7 +13,9 @@ import {
 export const socialMoneyMediaMap = {
   '0x3867ef780a3afcf1201ef4f2acc6a46e3bd1eb88': 'https://roll-token.s3.amazonaws.com/COLR/colr_tokenImage.png',
   '0xfc1e690f61efd961294b3e1ce3313fbd8aa4f85d':
-    'https://user-images.githubusercontent.com/24559073/73027994-92aeb000-3e02-11ea-9aa6-43b0eefda03c.png'
+    'https://user-images.githubusercontent.com/24559073/73027994-92aeb000-3e02-11ea-9aa6-43b0eefda03c.png',
+  '0x4057950247e4ec8dc7fe399ec19ea43e80b931c8':
+    'https://roll-token.s3.amazonaws.com/DANK/+f1299e5e-e4b3-474c-a95c-b8ab1cce0f8e.jpg'
 }
 
 export const socialMoneyMap = {
@@ -41,7 +43,8 @@ export const friendsOfRollMap = {
   MBC: true,
   COLR: true,
   SLP: true,
-  RCLE: true
+  RCLE: true,
+  DANK: true
 }
 
 export const tokens = {
@@ -76,7 +79,12 @@ export const INITIAL_TOKENS_CONTEXT = {
     //   [DECIMALS]: 4,
     //   [EXCHANGE_ADDRESS]: '0x51083Be1C8fFBedCeC56F28AA41B6707310AC489'
     // },
-
+    '0x4057950247e4ec8dc7fe399ec19ea43e80b931c8': {
+      [NAME]: 'DanKoin',
+      [SYMBOL]: 'DANK',
+      [DECIMALS]: 18,
+      [EXCHANGE_ADDRESS]: '0xD529c8Ae85989d556550B8be2720d7059d3f07cA'
+    },
     '0xbB98Fc1fD1080D2B8bdaD75c51D30B50c6F59b62': {
       [NAME]: 'PYGOZ',
       [SYMBOL]: 'PYGOZ',
