@@ -45,7 +45,7 @@ const Title = styled.div`
     display: inline;
     font-size: 1rem;
     font-weight: 500;
-    color: ${({ theme }) => theme.wisteriaPurple};
+    color: ${({ theme }) => theme.rollGrey};
     :hover {
       color: ${({ theme }) => darken(0.1, theme.wisteriaPurple)};
     }
@@ -57,15 +57,8 @@ export default function Header() {
     <HeaderFrame>
       <HeaderElement>
         <Title>
-          <Nod>
-            <Link id="link" href="https://uniswap.io">
-              <span role="img" aria-label="unicorn">
-                🦄{'  '}
-              </span>
-            </Link>
-          </Nod>
-          <Link id="link" href="https://uniswap.io">
-            <h1 id="title">Uniswap</h1>
+          <Link id="link" href="https://www.tryroll.com">
+            <h1 id="title">Roll - Social Money</h1>
           </Link>
         </Title>
       </HeaderElement>

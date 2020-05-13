@@ -9,12 +9,12 @@ import {
   getTokenExchangeAddressFromFactory,
   safeAccess
 } from '../utils'
+import { getTokenList } from './rollTokens'
 
-const NAME = 'name'
-const SYMBOL = 'symbol'
-const DECIMALS = 'decimals'
-const EXCHANGE_ADDRESS = 'exchangeAddress'
-
+export const NAME = 'name'
+export const SYMBOL = 'symbol'
+export const DECIMALS = 'decimals'
+export const EXCHANGE_ADDRESS = 'exchangeAddress'
 const UPDATE = 'UPDATE'
 
 const ETH = {
@@ -673,6 +673,10 @@ function reducer(state, { type, payload }) {
   switch (type) {
     case UPDATE: {
       const { networkId, tokenAddress, name, symbol, decimals, exchangeAddress } = payload
+      const isInList = INITIAL_TOKENS_CONTEXT[1][tokenAddress] || INITIAL_TOKENS_CONTEXT[4][tokenAddress]
+      if (!isInList) return state
+
+      console.log(' is in list: ', isInList)
       return {
         ...state,
         [networkId]: {
@@ -683,6 +687,10 @@ function reducer(state, { type, payload }) {
             [DECIMALS]: decimals,
             [EXCHANGE_ADDRESS]: exchangeAddress
           }
+        },
+        allowedTokens: {
+          ...state.allowedTokens,
+          [symbol]: true
         }
       }
     }
@@ -693,7 +701,11 @@ function reducer(state, { type, payload }) {
 }
 
 export default function Provider({ children }) {
-  const [state, dispatch] = useReducer(reducer, INITIAL_TOKENS_CONTEXT)
+  const [state, dispatch] = useReducer(
+    reducer,
+    // INITIAL_TOKENS_CONTEXT
+    getTokenList({ NAME, SYMBOL, DECIMALS, EXCHANGE_ADDRESS }, INITIAL_TOKENS_CONTEXT)
+  )
 
   const update = useCallback((networkId, tokenAddress, name, symbol, decimals, exchangeAddress) => {
     dispatch({ type: UPDATE, payload: { networkId, tokenAddress, name, symbol, decimals, exchangeAddress } })
@@ -750,5 +762,8 @@ export function useAllTokenDetails() {
 
   const [state] = useTokensContext()
 
-  return useMemo(() => ({ ...ETH, ...(safeAccess(state, [chainId]) || {}) }), [state, chainId])
+  return useMemo(() => ({ ...ETH, ...(safeAccess(state, [chainId]) || {}), allowedTokens: state.allowedTokens }), [
+    state,
+    chainId
+  ])
 }

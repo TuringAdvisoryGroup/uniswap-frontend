@@ -23,6 +23,7 @@ const mediaWidthTemplates = Object.keys(MEDIA_WIDTHS).reduce((accumulator, size)
 
 const white = '#FFFFFF'
 const black = '#000000'
+const rollPrimaryBlue = '#004EFF'
 
 export default function ThemeProvider({ children }) {
   const [darkMode, toggleDarkMode] = useDarkModeManager()
@@ -52,7 +53,7 @@ const theme = darkMode => ({
   modalBackground: darkMode ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.5)',
   inputBackground: darkMode ? '#202124' : white,
   placeholderGray: darkMode ? '#5F5F5F' : '#E1E1E1',
-  shadowColor: darkMode ? '#000' : '#2F80ED',
+  shadowColor: darkMode ? '#000' : rollPrimaryBlue,
 
   // grays
   concreteGray: darkMode ? '#292C2F' : '#FAFAFA',
@@ -70,11 +71,11 @@ const theme = darkMode => ({
   // blues
   zumthorBlue: darkMode ? '#212529' : '#EBF4FF',
   malibuBlue: darkMode ? '#E67AEF' : '#5CA2FF',
-  royalBlue: darkMode ? '#DC6BE5' : '#2F80ED',
+  royalBlue: rollPrimaryBlue,
   loadingBlue: darkMode ? '#e4f0ff' : '#e4f0ff',
 
   // purples
-  wisteriaPurple: '#DC6BE5',
+  wisteriaPurple: rollPrimaryBlue,
   // reds
   salmonRed: '#FF6871',
   // orange
@@ -82,7 +83,7 @@ const theme = darkMode => ({
   // yellows
   warningYellow: '#FFE270',
   // pink
-  uniswapPink: '#DC6BE5',
+  uniswapPink: rollPrimaryBlue,
   //green
   connectedGreen: '#27AE60',
 
@@ -105,7 +106,9 @@ const theme = darkMode => ({
   flexRowNoWrap: css`
     display: flex;
     flex-flow: row nowrap;
-  `
+  `,
+  // ROLL COLORS
+  rollGrey: darkMode ? rollPrimaryBlue : '#293354'
 })
 
 export const GlobalStyle = createGlobalStyle`

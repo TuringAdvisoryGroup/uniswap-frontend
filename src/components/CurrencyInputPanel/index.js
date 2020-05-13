@@ -18,14 +18,14 @@ import Modal from '../Modal'
 import TokenLogo from '../TokenLogo'
 import SearchIcon from '../../assets/images/magnifying-glass.svg'
 import { useTransactionAdder, usePendingApproval } from '../../contexts/Transactions'
-import { useTokenDetails, useAllTokenDetails, INITIAL_TOKENS_CONTEXT } from '../../contexts/Tokens'
+import { useTokenDetails, useAllTokenDetails } from '../../contexts/Tokens'
 import { useAddressBalance } from '../../contexts/Balances'
 import { ReactComponent as Close } from '../../assets/images/x.svg'
 import { transparentize } from 'polished'
 import { Spinner } from '../../theme'
 import Circle from '../../assets/images/circle-grey.svg'
 import { useETHPriceInUSD, useAllBalances } from '../../contexts/Balances'
-
+import { socialMoneyMap, friendsOfRollMap } from '../../contexts/rollTokens'
 const GAS_MARGIN = ethers.utils.bigNumberify(1000)
 
 const SubCurrencySelect = styled.button`
@@ -605,53 +605,92 @@ function CurrencySelectModal({ isOpen, onDismiss, onTokenSelect, urlAddedTokens,
       return <TokenModalInfo>{t('noExchange')}</TokenModalInfo>
     }
 
-    return filteredTokenList.map(({ address, symbol, name, balance, usdBalance }) => {
-      const urlAdded = urlAddedTokens && urlAddedTokens.hasOwnProperty(address)
-      const customAdded =
-        address !== 'ETH' &&
-        INITIAL_TOKENS_CONTEXT[chainId] &&
-        !INITIAL_TOKENS_CONTEXT[chainId].hasOwnProperty(address) &&
-        !urlAdded
-
-      if (hideETH && address === 'ETH') {
-        return null
+    return filteredTokenList.reduce(
+      (map, token) => {
+        if (socialMoneyMap[token.symbol]) {
+          map.socialMoney.push(
+            <TokenRow
+              key={`list-tokens-${token.symbol}`}
+              token={token}
+              account={account}
+              _onTokenSelect={_onTokenSelect}
+            />
+          )
+        } else if (friendsOfRollMap[token.symbol]) {
+          map.friends.push(
+            <TokenRow
+              key={`list-tokens-${token.symbol}`}
+              token={token}
+              account={account}
+              _onTokenSelect={_onTokenSelect}
+            />
+          )
+        } else if (allTokens.allowedTokens[token.symbol]) {
+          map.tokens.push(
+            <TokenRow
+              key={`list-tokens-${token.symbol}`}
+              token={token}
+              account={account}
+              _onTokenSelect={_onTokenSelect}
+            />
+          )
+        }
+        return map
+      },
+      {
+        tokens: [],
+        socialMoney: [],
+        friends: []
       }
+    )
 
-      return (
-        <TokenModalRow key={address} onClick={() => _onTokenSelect(address)}>
-          <TokenRowLeft>
-            <TokenLogo address={address} size={'2rem'} />
-            <TokenSymbolGroup>
-              <div>
-                <span id="symbol">{symbol}</span>
-                <FadedSpan>
-                  {urlAdded && '(Added by URL)'} {customAdded && '(Added by user)'}
-                </FadedSpan>
-              </div>
-              <TokenFullName> {name}</TokenFullName>
-            </TokenSymbolGroup>
-          </TokenRowLeft>
-          <TokenRowRight>
-            {balance ? (
-              <TokenRowBalance>{balance && (balance > 0 || balance === '<0.0001') ? balance : '-'}</TokenRowBalance>
-            ) : account ? (
-              <SpinnerWrapper src={Circle} alt="loader" />
-            ) : (
-              '-'
-            )}
-            <TokenRowUsd>
-              {usdBalance && !usdBalance.isNaN()
-                ? usdBalance.isZero()
-                  ? ''
-                  : usdBalance.lt(0.01)
-                  ? '<$0.01'
-                  : '$' + formatToUsd(usdBalance)
-                : ''}
-            </TokenRowUsd>
-          </TokenRowRight>
-        </TokenModalRow>
-      )
-    })
+    // return filteredTokenList.map(({ address, symbol, name, balance, usdBalance }) => {
+    //   // const urlAdded = urlAddedTokens && urlAddedTokens.hasOwnProperty(address)
+    //   // const customAdded =
+    //   //   address !== 'ETH' &&
+    //   //   INITIAL_TOKENS_CONTEXT[chainId] &&
+    //   //   !INITIAL_TOKENS_CONTEXT[chainId].hasOwnProperty(address) &&
+    //   //   !urlAdded
+
+    //   if (hideETH && address === 'ETH') {
+    //     return null
+    //   }
+
+    //   return (
+    //     <TokenModalRow key={address} onClick={() => _onTokenSelect(address)}>
+    //       <TokenRowLeft>
+    //         <TokenLogo address={address} size={'2rem'} />
+    //         <TokenSymbolGroup>
+    //           <div>
+    //             <span id="symbol">{symbol}</span>
+    //             {/* <FadedSpan>
+    //               {urlAdded && '(Added by URL)'} {customAdded && '(Added by user)'}
+    //             </FadedSpan> */}
+    //           </div>
+    //           <TokenFullName> {name}</TokenFullName>
+    //         </TokenSymbolGroup>
+    //       </TokenRowLeft>
+    //       <TokenRowRight>
+    //         {balance ? (
+    //           <TokenRowBalance>{balance && (balance > 0 || balance === '<0.0001') ? balance : '-'}</TokenRowBalance>
+    //         ) : account ? (
+    //           <SpinnerWrapper src={Circle} alt="loader" />
+    //         ) : (
+    //           '-'
+    //         )}
+    //         <TokenRowUsd>
+    //           {usdBalance && !usdBalance.isNaN()
+    //             ? usdBalance.isZero()
+    //               ? ''
+    //               : usdBalance.lt(0.01)
+    //               ? '<$0.01'
+    //               : '$' + formatToUsd(usdBalance)
+    //             : ''}
+    //         </TokenRowUsd>
+    //       </TokenRowRight>
+    //     </TokenModalRow>
+    //   )
+    // })
   }
 
   // manage focus on modal show
@@ -692,8 +731,48 @@ function CurrencySelectModal({ isOpen, onDismiss, onTokenSelect, urlAddedTokens,
             onChange={onInput}
           />
         </SearchContainer>
-        <TokenList>{renderTokenList()}</TokenList>
+        {/* <TokenList>{renderTokenList()}</TokenList> */}
+        <List list={renderTokenList()} />
       </TokenModal>
     </Modal>
+  )
+}
+
+const TokenRow = ({ token, account, _onTokenSelect }) => {
+  const { address, symbol, name, balance, usdBalance } = token
+  return (
+    <TokenModalRow key={address} onClick={() => _onTokenSelect(address)}>
+      <TokenRowLeft>
+        <TokenLogo address={address} size={'2rem'} />
+        <TokenSymbolGroup>
+          <span id="symbol">{symbol}</span>
+          <TokenFullName>{name}</TokenFullName>
+        </TokenSymbolGroup>
+      </TokenRowLeft>
+      <TokenRowRight>
+        {balance ? (
+          <TokenRowBalance>{balance && (balance > 0 || balance === '<0.0001') ? balance : '-'}</TokenRowBalance>
+        ) : account ? (
+          <SpinnerWrapper src={Circle} alt="loader" />
+        ) : (
+          '-'
+        )}
+        <TokenRowUsd>{usdBalance ? (usdBalance.lt(0.01) ? '<$0.01' : '$' + formatToUsd(usdBalance)) : ''}</TokenRowUsd>
+      </TokenRowRight>
+    </TokenModalRow>
+  )
+}
+
+const List = ({ list }) => {
+  const { tokens, socialMoney, friends } = list
+  return (
+    <TokenList>
+      <p style={{ paddingLeft: '1rem' }}>Social Money</p>
+      {socialMoney}
+      <p style={{ paddingLeft: '1rem' }}>Friends of Roll</p>
+      {friends}
+      <p style={{ paddingLeft: '1rem' }}>Tokens</p>
+      {tokens}
+    </TokenList>
   )
 }

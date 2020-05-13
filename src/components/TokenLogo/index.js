@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { isAddress } from '../../utils'
+import { socialMoneyMediaMap } from '../../contexts/rollTokens'
 
 import { ReactComponent as EthereumLogo } from '../../assets/images/ethereum-logo.svg'
 
@@ -38,6 +39,8 @@ export default function TokenLogo({ address, size = '1rem', ...rest }) {
     return <StyledEthereumLogo size={size} />
   } else if (!error && !BAD_IMAGES[address]) {
     path = TOKEN_ICON_API(address.toLowerCase())
+  } else if (socialMoneyMediaMap[address]) {
+    path = socialMoneyMediaMap[address]
   } else {
     return (
       <Emoji {...rest} size={size}>
