@@ -735,21 +735,21 @@ export default function ExchangePage({ initialCurrency, sending = false, params 
   const [showInputWarning, setShowInputWarning] = useState(false)
   const [showOutputWarning, setShowOutputWarning] = useState(false)
 
-  useEffect(() => {
-    if (newInputDetected) {
-      setShowInputWarning(true)
-    } else {
-      setShowInputWarning(false)
-    }
-  }, [newInputDetected, setShowInputWarning])
+  // useEffect(() => {
+  //   if (newInputDetected) {
+  //     setShowInputWarning(true)
+  //   } else {
+  //     setShowInputWarning(false)
+  //   }
+  // }, [newInputDetected, setShowInputWarning])
 
-  useEffect(() => {
-    if (newOutputDetected) {
-      setShowOutputWarning(true)
-    } else {
-      setShowOutputWarning(false)
-    }
-  }, [newOutputDetected, setShowOutputWarning])
+  // useEffect(() => {
+  //   if (newOutputDetected) {
+  //     setShowOutputWarning(true)
+  //   } else {
+  //     setShowOutputWarning(false)
+  //   }
+  // }, [newOutputDetected, setShowOutputWarning])
 
   return (
     <>
