@@ -605,13 +605,13 @@ export default function AddLiquidity({ params }) {
 
   const [showOutputWarning, setShowOutputWarning] = useState(false)
 
-  useEffect(() => {
-    if (newOutputDetected) {
-      setShowOutputWarning(true)
-    } else {
-      setShowOutputWarning(false)
-    }
-  }, [newOutputDetected, setShowOutputWarning])
+  // useEffect(() => {
+  //   if (newOutputDetected) {
+  //     setShowOutputWarning(true)
+  //   } else {
+  //     setShowOutputWarning(false)
+  //   }
+  // }, [newOutputDetected, setShowOutputWarning])
   return (
     <>
       {showOutputWarning && (

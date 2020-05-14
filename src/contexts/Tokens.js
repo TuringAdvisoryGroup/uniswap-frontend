@@ -673,10 +673,6 @@ function reducer(state, { type, payload }) {
   switch (type) {
     case UPDATE: {
       const { networkId, tokenAddress, name, symbol, decimals, exchangeAddress } = payload
-      const isInList = INITIAL_TOKENS_CONTEXT[1][tokenAddress] || INITIAL_TOKENS_CONTEXT[4][tokenAddress]
-      if (!isInList) return state
-
-      console.log(' is in list: ', isInList)
       return {
         ...state,
         [networkId]: {

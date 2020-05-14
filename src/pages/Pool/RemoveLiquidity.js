@@ -370,13 +370,13 @@ export default function RemoveLiquidity({ params }) {
 
   const [showCustomTokenWarning, setShowCustomTokenWarning] = useState(false)
 
-  useEffect(() => {
-    if (newOutputDetected) {
-      setShowCustomTokenWarning(true)
-    } else {
-      setShowCustomTokenWarning(false)
-    }
-  }, [newOutputDetected])
+  // useEffect(() => {
+  //   if (newOutputDetected) {
+  //     setShowCustomTokenWarning(true)
+  //   } else {
+  //     setShowCustomTokenWarning(false)
+  //   }
+  // }, [newOutputDetected])
 
   return (
     <>
