@@ -25,7 +25,9 @@ export const socialMoneyMediaMap = {
   '0xfc1e690f61efd961294b3e1ce3313fbd8aa4f85d':
     'https://user-images.githubusercontent.com/24559073/73027994-92aeb000-3e02-11ea-9aa6-43b0eefda03c.png',
   '0x4057950247e4ec8dc7fe399ec19ea43e80b931c8':
-    'https://roll-token.s3.amazonaws.com/DANK/+f1299e5e-e4b3-474c-a95c-b8ab1cce0f8e.jpg'
+    'https://roll-token.s3.amazonaws.com/DANK/+f1299e5e-e4b3-474c-a95c-b8ab1cce0f8e.jpg',
+  '0x7841b2a48d1f6e78acec359fed6d874eb8a0f63c':
+    'https://user-images.githubusercontent.com/24559073/82630569-0f8b4400-9bc1-11ea-8ff9-7811abfe3c0a.png'
 }
 
 export const socialMoneyMap = {
@@ -44,7 +46,8 @@ export const socialMoneyMap = {
   ALXO: true,
   YUMI: true,
   WGM: true,
-  PYGOZ: true
+  PYGOZ: true,
+  KERMAN: true
 
   // SCB: true
 }
@@ -114,6 +117,12 @@ export const friendsOfRoll = ({ NAME, SYMBOL, DECIMALS, EXCHANGE_ADDRESS }) => {
 // ROLL SOCIAL MONEY
 export const socialMoney = ({ NAME, SYMBOL, DECIMALS, EXCHANGE_ADDRESS }) => {
   return {
+    '0x7841b2a48d1f6e78acec359fed6d874eb8a0f63c': {
+      [NAME]: 'KERMAN',
+      [SYMBOL]: 'KERMAN',
+      [DECIMALS]: 4,
+      [EXCHANGE_ADDRESS]: '0x627297152c616185a269c3d8e889465c4b56674b'
+    },
     '0xDcfE18bc46f5A0Cd0d3Af0c2155d2bCB5AdE2fc5': {
       [NAME]: 'Hue',
       [SYMBOL]: 'HUE',
