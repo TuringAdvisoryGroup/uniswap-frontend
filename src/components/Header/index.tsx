@@ -335,11 +335,14 @@ export default function Header() {
         <UniBalanceContent setShowUniBalanceModal={setShowUniBalanceModal} />
       </Modal>
       <HeaderRow>
-        <Title href=".">
-          <UniIcon>
-            <img width={'24px'} src={darkMode ? LogoDark : Logo} alt="logo" />
-          </UniIcon>
-        </Title>
+        <a
+          rel="noreferrer"
+          target="_blank"
+          style={{ color: darkMode ? 'white' : 'black', textDecoration: 'none' }}
+          href="https://www.tryroll.com"
+        >
+          <h4 id="title">Roll - Social Money</h4>
+        </a>
       </HeaderRow>
       <HeaderLinks>
         <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
@@ -398,48 +401,6 @@ export default function Header() {
           <Menu />
         </HeaderElementWrap>
       </HeaderControls>
-      {/* <HeaderFrame>
-      <RowBetween style={{ alignItems: 'flex-start' }} padding="1rem 1rem 0 1rem">
-        <HeaderElement>
-          <Title href=".">
-            <UniIcon>
-              <img src={isDark ? LogoDark : Logo} alt="logo" />
-            </UniIcon>
-            <TitleText>
-              <img style={{ marginLeft: '4px', marginTop: '4px' }} src={isDark ? WordmarkDark : Wordmark} alt="logo" />
-            </TitleText>
-          </Title>
-        </HeaderElement> 
-        <a
-          rel="noreferrer"
-          target="_blank"
-          style={{ color: isDark ? 'white' : 'black', textDecoration: 'none' }}
-          href="https://www.tryroll.com"
-        >
-          <h4 id="title">Roll - Social Money</h4>
-        </a>
-
-        <HeaderControls>
-          <HeaderElement>
-            <TestnetWrapper>
-              {!isMobile && NETWORK_LABELS[chainId] && <NetworkCard>{NETWORK_LABELS[chainId]}</NetworkCard>}
-            </TestnetWrapper>
-            <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}>
-              {account && userEthBalance ? (
-                <BalanceText style={{ flexShrink: 0 }} pl="0.75rem" pr="0.5rem" fontWeight={500}>
-                  {userEthBalance?.toSignificant(4)} ETH
-                </BalanceText>
-              ) : null}
-              <Web3Status />
-            </AccountElement>
-          </HeaderElement>
-          <HeaderElementWrap>
-            <VersionSwitch />
-            <Settings />
-            <Menu />
-          </HeaderElementWrap>
-        </HeaderControls>
-              </RowBetween> */}
     </HeaderFrame>
   )
 }
