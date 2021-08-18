@@ -55,6 +55,7 @@ export default async function getTokenList(
     }
 
     const json = await response.json()
+    // @dev: this is removed because roll list is not well formated. We should patch the list in the future
     // if (!tokenListValidator(json)) {
     //   const validationErrors: string =
     //     tokenListValidator.errors?.reduce<string>((memo, error) => {

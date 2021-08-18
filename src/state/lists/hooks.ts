@@ -87,7 +87,6 @@ function combineMaps(map1: TokenAddressMap, map2: TokenAddressMap): TokenAddress
 
 // merge tokens contained within lists from urls
 function useCombinedTokenMapFromUrls(urls: string[] | undefined): TokenAddressMap {
-  // console.log(urls)
   const lists = useAllLists()
   return useMemo(() => {
     if (!urls) return EMPTY_LIST
@@ -97,11 +96,7 @@ function useCombinedTokenMapFromUrls(urls: string[] | undefined): TokenAddressMa
         // sort by priority so top priority goes last
         .sort(sortByListPriority)
         .reduce((allTokens, currentUrl) => {
-          // console.log(lists)
-          // console.log(currentUrl)
-
           const current = lists[currentUrl]?.current
-          // console.log(current)
           if (!current) return allTokens
           try {
             return combineMaps(allTokens, listToTokenMap(current))
