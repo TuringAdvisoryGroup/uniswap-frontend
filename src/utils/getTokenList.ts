@@ -63,7 +63,21 @@ export default async function getTokenList(
         }, '') ?? 'unknown error'
       throw new Error(`Token list failed validation: ${validationErrors}`)
     }
-    return json
+
+    const OBJ = {
+      name: 'Roll Default List',
+      timestamp: '2020-07-28T20:33:38+00:00',
+      version: {
+        major: 1,
+        minor: 0,
+        patch: 0,
+      },
+      tags: {},
+      logoURI: '',
+      keywords: ['roll', 'default'],
+      tokens: json,
+    }
+    return OBJ
   }
   throw new Error('Unrecognized list URL protocol.')
 }

@@ -8,6 +8,7 @@ import UNSUPPORTED_TOKEN_LIST from '../../constants/tokenLists/uniswap-v2-unsupp
 import { AppState } from '../index'
 import { UNSUPPORTED_LIST_URLS } from './../../constants/lists'
 import { WrappedTokenInfo } from './wrappedTokenInfo'
+import { TokenInfo } from '@uniswap/token-lists'
 
 export type TokenAddressMap = Readonly<
   { [chainId in ChainId | number]: Readonly<{ [tokenAddress: string]: { token: WrappedTokenInfo; list: TokenList } }> }
@@ -29,28 +30,38 @@ const listCache: WeakMap<TokenList, TokenAddressMap> | null =
 
 const buildToken = (rollExchangeToken: any): TokenInfo => {
   return {
-    address: rollExchangeToken.token.contractAddress,
+    address: rollExchangeToken.address,
     chainId: 1,
-    decimals: rollExchangeToken.token.decimals,
-    logoURI: rollExchangeToken.token.tokenImage,
-    name: rollExchangeToken.token.name,
-    symbol: rollExchangeToken.token.symbol
+    decimals: rollExchangeToken.decimals,
+    logoURI: rollExchangeToken.logoURI,
+    name: rollExchangeToken.name,
+    symbol: rollExchangeToken.symbol,
   }
 }
 
 export function listToTokenMap(list: TokenList): TokenAddressMap {
+  console.log(list)
+  let list2 = list
   const result = listCache?.get(list)
   if (result) return result
 
-  const map = list.tokens.reduce<TokenAddressMap>(
+  try {
+    const map1 = list.tokens.reduce((e) => e)
+  } catch (e) {
+    console.log('ERROR ANDY')
+    console.log(list)
+    //@ts-ignore
+    list2 = { ...list, tokens: list.tokens.tokens }
+  }
+  const map = list2.tokens.reduce<TokenAddressMap>(
     (tokenMap, tokenInfo) => {
-      const token = new WrappedTokenInfo(tokenInfo, list)
+      const token = new WrappedTokenInfo(buildToken(tokenInfo), list)
       if (tokenMap[token.chainId][token.address] !== undefined) {
         console.error(new Error(`Duplicate token! ${token.address}`))
         return tokenMap
       }
-      const token = new WrappedTokenInfo(buildToken(tokenInfo))
-      if (tokenMap[token.chainId][token.address] !== undefined) throw Error('Duplicate tokens.')
+      // const token = new WrappedTokenInfo(buildToken(tokenInfo))
+      // if (tokenMap[token.chainId][token.address] !== undefined) throw Error('Duplicate tokens.')
       return {
         ...tokenMap,
         [token.chainId]: {
@@ -72,14 +83,14 @@ const TRANSFORMED_DEFAULT_TOKEN_LIST = listToTokenMap(DEFAULT_TOKEN_LIST)
 
 export function useAllLists(): AppState['lists']['byUrl'] {
   return useSelector<AppState, AppState['lists']['byUrl']>((state) => state.lists.byUrl)
-export function useTokenList(url: string): TokenAddressMap {
-  const lists = useSelector<AppState, AppState['lists']['byUrl']>(state => state.lists.byUrl)
+  // export function useTokenList(url: string): TokenAddressMap {
+  //   const lists = useSelector<AppState, AppState['lists']['byUrl']>(state => state.lists.byUrl)
 
-  return useMemo(() => {
-    const current = lists[url]?.current
-    if (!current) return EMPTY_LIST
-    return listToTokenMap(current)
-  }, [lists, url])
+  //   return useMemo(() => {
+  //     const current = lists[url]?.current
+  //     if (!current) return EMPTY_LIST
+  //     return listToTokenMap(current)
+  //   }, [lists, url])
 }
 
 function combineMaps(map1: TokenAddressMap, map2: TokenAddressMap): TokenAddressMap {

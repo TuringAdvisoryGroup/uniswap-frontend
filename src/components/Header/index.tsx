@@ -9,8 +9,6 @@ import { Moon, Sun } from 'react-feather'
 import styled from 'styled-components/macro'
 import { Link } from 'react-router-dom'
 
-import styled from 'styled-components'
-
 import Logo from '../../assets/svg/logo.svg'
 import LogoDark from '../../assets/svg/logo_white.svg'
 
@@ -400,9 +398,9 @@ export default function Header() {
           <Menu />
         </HeaderElementWrap>
       </HeaderControls>
-    <HeaderFrame>
+      {/* <HeaderFrame>
       <RowBetween style={{ alignItems: 'flex-start' }} padding="1rem 1rem 0 1rem">
-        {/* <HeaderElement>
+        <HeaderElement>
           <Title href=".">
             <UniIcon>
               <img src={isDark ? LogoDark : Logo} alt="logo" />
@@ -411,7 +409,7 @@ export default function Header() {
               <img style={{ marginLeft: '4px', marginTop: '4px' }} src={isDark ? WordmarkDark : Wordmark} alt="logo" />
             </TitleText>
           </Title>
-        </HeaderElement> */}
+        </HeaderElement> 
         <a
           rel="noreferrer"
           target="_blank"
@@ -441,7 +439,7 @@ export default function Header() {
             <Menu />
           </HeaderElementWrap>
         </HeaderControls>
-      </RowBetween>
+              </RowBetween> */}
     </HeaderFrame>
   )
 }
