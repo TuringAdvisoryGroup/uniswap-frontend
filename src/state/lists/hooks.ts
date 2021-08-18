@@ -73,14 +73,6 @@ const TRANSFORMED_DEFAULT_TOKEN_LIST = listToTokenMap(DEFAULT_TOKEN_LIST)
 
 export function useAllLists(): AppState['lists']['byUrl'] {
   return useSelector<AppState, AppState['lists']['byUrl']>((state) => state.lists.byUrl)
-  // export function useTokenList(url: string): TokenAddressMap {
-  //   const lists = useSelector<AppState, AppState['lists']['byUrl']>(state => state.lists.byUrl)
-
-  //   return useMemo(() => {
-  //     const current = lists[url]?.current
-  //     if (!current) return EMPTY_LIST
-  //     return listToTokenMap(current)
-  //   }, [lists, url])
 }
 
 function combineMaps(map1: TokenAddressMap, map2: TokenAddressMap): TokenAddressMap {
