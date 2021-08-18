@@ -36,6 +36,7 @@ const buildToken = (rollExchangeToken: any): TokenInfo => {
     logoURI: rollExchangeToken.logoURI,
     name: rollExchangeToken.name,
     symbol: rollExchangeToken.symbol,
+    tags: rollExchangeToken.tags, //@dev: is this wanted? if yes we can remove buildToken
   }
 }
 
