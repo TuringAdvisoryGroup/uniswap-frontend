@@ -40,28 +40,17 @@ const buildToken = (rollExchangeToken: any): TokenInfo => {
 }
 
 export function listToTokenMap(list: TokenList): TokenAddressMap {
-  console.log(list)
-  let list2 = list
   const result = listCache?.get(list)
   if (result) return result
 
-  try {
-    const map1 = list.tokens.reduce((e) => e)
-  } catch (e) {
-    console.log('ERROR ANDY')
-    console.log(list)
-    //@ts-ignore
-    list2 = { ...list, tokens: list.tokens.tokens }
-  }
-  const map = list2.tokens.reduce<TokenAddressMap>(
+  const map = list.tokens.reduce<TokenAddressMap>(
     (tokenMap, tokenInfo) => {
       const token = new WrappedTokenInfo(buildToken(tokenInfo), list)
       if (tokenMap[token.chainId][token.address] !== undefined) {
         console.error(new Error(`Duplicate token! ${token.address}`))
         return tokenMap
       }
-      // const token = new WrappedTokenInfo(buildToken(tokenInfo))
-      // if (tokenMap[token.chainId][token.address] !== undefined) throw Error('Duplicate tokens.')
+      if (tokenMap[token.chainId][token.address] !== undefined) throw Error('Duplicate tokens.')
       return {
         ...tokenMap,
         [token.chainId]: {
@@ -105,6 +94,7 @@ function combineMaps(map1: TokenAddressMap, map2: TokenAddressMap): TokenAddress
 
 // merge tokens contained within lists from urls
 function useCombinedTokenMapFromUrls(urls: string[] | undefined): TokenAddressMap {
+  // console.log(urls)
   const lists = useAllLists()
   return useMemo(() => {
     if (!urls) return EMPTY_LIST
@@ -114,7 +104,11 @@ function useCombinedTokenMapFromUrls(urls: string[] | undefined): TokenAddressMa
         // sort by priority so top priority goes last
         .sort(sortByListPriority)
         .reduce((allTokens, currentUrl) => {
+          // console.log(lists)
+          // console.log(currentUrl)
+
           const current = lists[currentUrl]?.current
+          // console.log(current)
           if (!current) return allTokens
           try {
             return combineMaps(allTokens, listToTokenMap(current))
