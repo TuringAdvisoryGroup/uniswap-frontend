@@ -29,6 +29,7 @@ const listCache: WeakMap<TokenList, TokenAddressMap> | null =
   typeof WeakMap !== 'undefined' ? new WeakMap<TokenList, TokenAddressMap>() : null
 
 const buildToken = (rollExchangeToken: any): TokenInfo => {
+  console.log(rollExchangeToken.tags)
   return {
     address: rollExchangeToken.address,
     chainId: 1,
@@ -36,7 +37,7 @@ const buildToken = (rollExchangeToken: any): TokenInfo => {
     logoURI: rollExchangeToken.logoURI,
     name: rollExchangeToken.name,
     symbol: rollExchangeToken.symbol,
-    tags: rollExchangeToken.tags, //@dev: is this wanted? if yes we can remove buildToken
+    // tags: rollExchangeToken.tags, //@dev: this is to show right label and tooltip for each token
   }
 }
 
