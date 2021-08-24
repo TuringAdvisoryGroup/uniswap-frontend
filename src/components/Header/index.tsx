@@ -349,7 +349,7 @@ export default function Header() {
         </StyledNavLink>
         <StyledNavLink
           id={`pool-nav-link`}
-          to={'/pool'}
+          to={'/pool/v2'}
           isActive={(match, { pathname }) =>
             Boolean(match) ||
             pathname.startsWith('/add') ||
@@ -360,10 +360,10 @@ export default function Header() {
         >
           {t('pool')}
         </StyledNavLink>
-        <StyledNavLink id={`stake-nav-link`} to={'/vote'}>
+        {/* <StyledNavLink id={`stake-nav-link`} to={'/vote'}>
           Vote
-        </StyledNavLink>
-        <StyledExternalLink id={`stake-nav-link`} href={'https://info.uniswap.org'}>
+        </StyledNavLink> */}
+        <StyledExternalLink id={`stake-nav-link`} href={'https://v2.info.uniswap.org/'}>
           Charts <span style={{ fontSize: '11px', textDecoration: 'none !important' }}>↗</span>
         </StyledExternalLink>
       </HeaderLinks>
