@@ -1,22 +1,21 @@
-import { transparentize } from 'polished'
 import React, { useMemo } from 'react'
+import { Text, TextProps } from 'rebass'
 import styled, {
-  ThemeProvider as StyledComponentsThemeProvider,
   createGlobalStyle,
   css,
-  DefaultTheme
+  DefaultTheme,
+  ThemeProvider as StyledComponentsThemeProvider,
 } from 'styled-components'
 import { useIsDarkMode } from '../state/user/hooks'
-import { Text, TextProps } from 'rebass'
 import { Colors } from './styled'
 
 export * from './components'
 
-const MEDIA_WIDTHS = {
+export const MEDIA_WIDTHS = {
   upToExtraSmall: 500,
-  upToSmall: 600,
+  upToSmall: 720,
   upToMedium: 960,
-  upToLarge: 1280
+  upToLarge: 1280,
 }
 
 const mediaWidthTemplates: { [width in keyof typeof MEDIA_WIDTHS]: typeof css } = Object.keys(MEDIA_WIDTHS).reduce(
@@ -48,14 +47,16 @@ export function colors(darkMode: boolean): Colors {
     text5: darkMode ? '#2C2F36' : '#EDEEF2',
 
     // backgrounds / greys
-    bg1: darkMode ? '#212429' : '#FFFFFF',
-    bg2: darkMode ? '#2C2F36' : '#F7F8FA',
-    bg3: darkMode ? '#40444F' : '#EDEEF2',
-    bg4: darkMode ? '#565A69' : '#CED0D9',
-    bg5: darkMode ? '#565A69' : '#888D9B',
+    bg0: darkMode ? '#191B1F' : '#FFF',
+    bg1: darkMode ? '#212429' : '#F7F8FA',
+    bg2: darkMode ? '#2C2F36' : '#EDEEF2',
+    bg3: darkMode ? '#40444F' : '#CED0D9',
+    bg4: darkMode ? '#565A69' : '#888D9B',
+    bg5: darkMode ? '#6C7284' : '#888D9B',
+    bg6: darkMode ? '#1A2028' : '#6C7284',
 
     //specialty colors
-    modalBG: darkMode ? 'rgba(0,0,0,0.85)' : 'rgba(0,0,0,0.6)',
+    modalBG: darkMode ? 'rgba(0,0,0,.425)' : 'rgba(0,0,0,0.3)',
     advancedBG: darkMode ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.6)',
 
     //primary colors
@@ -74,10 +75,19 @@ export function colors(darkMode: boolean): Colors {
     secondary3: darkMode ? '#17000b26' : '#FDEAF1',
 
     // other
-    red1: '#FF6871',
+    red1: '#FD4040',
+    red2: '#F82D3A',
+    red3: '#D60000',
     green1: '#27AE60',
-    yellow1: '#FFE270',
-    yellow2: '#F3841E'
+    yellow1: '#e3a507',
+    yellow2: '#ff8f00',
+    yellow3: '#F3B71E',
+    blue1: '#2172E5',
+    blue2: '#5199FF',
+
+    error: '#FD4040',
+    success: '#27AE60',
+    warning: '#ff8f00',
 
     // dont wanna forget these blue yet
     // blue4: darkMode ? '#153d6f70' : '#C4D9F8',
@@ -92,7 +102,7 @@ export function theme(darkMode: boolean): DefaultTheme {
     grids: {
       sm: 8,
       md: 12,
-      lg: 24
+      lg: 24,
     },
 
     //shadows
@@ -109,7 +119,7 @@ export function theme(darkMode: boolean): DefaultTheme {
     flexRowNoWrap: css`
       display: flex;
       flex-flow: row nowrap;
-    `
+    `,
   }
 }
 
@@ -132,8 +142,14 @@ export const TYPE = {
   link(props: TextProps) {
     return <TextWrapper fontWeight={500} color={'primary1'} {...props} />
   },
+  label(props: TextProps) {
+    return <TextWrapper fontWeight={600} color={'text1'} {...props} />
+  },
   black(props: TextProps) {
     return <TextWrapper fontWeight={500} color={'text1'} {...props} />
+  },
+  white(props: TextProps) {
+    return <TextWrapper fontWeight={500} color={'white'} {...props} />
   },
   body(props: TextProps) {
     return <TextWrapper fontWeight={400} fontSize={16} color={'text1'} {...props} />
@@ -147,11 +163,14 @@ export const TYPE = {
   subHeader(props: TextProps) {
     return <TextWrapper fontWeight={400} fontSize={14} {...props} />
   },
+  small(props: TextProps) {
+    return <TextWrapper fontWeight={500} fontSize={11} {...props} />
+  },
   blue(props: TextProps) {
-    return <TextWrapper fontWeight={500} color={'primary1'} {...props} />
+    return <TextWrapper fontWeight={500} color={'blue1'} {...props} />
   },
   yellow(props: TextProps) {
-    return <TextWrapper fontWeight={500} color={'yellow1'} {...props} />
+    return <TextWrapper fontWeight={500} color={'yellow3'} {...props} />
   },
   darkGray(props: TextProps) {
     return <TextWrapper fontWeight={500} color={'text3'} {...props} />
@@ -164,18 +183,36 @@ export const TYPE = {
   },
   error({ error, ...props }: { error: boolean } & TextProps) {
     return <TextWrapper fontWeight={500} color={error ? 'red1' : 'text2'} {...props} />
-  }
+  },
 }
+
+export const ThemedBackground = styled.div<{ backgroundColor?: string | undefined }>`
+  position: fixed;
+  top: 0;
+  left: calc(-100vw / 2);
+  right: 0;
+  pointer-events: none;
+  /* max-width: 100vw !important; */
+  width: 200vw;
+  height: 200vh;
+  mix-blend-mode: color;
+  background: ${({ backgroundColor }) =>
+    `radial-gradient(50% 50% at 50% 50%, ${
+      backgroundColor ? backgroundColor : '#fc077d10'
+    } 0%, rgba(255, 255, 255, 0) 100%)`};
+  transform: translateY(-100vh);
+  will-change: background;
+  transition: background 450ms ease;
+`
 
 export const FixedGlobalStyle = createGlobalStyle`
 html, input, textarea, button {
   font-family: 'Inter', sans-serif;
-  letter-spacing: -0.018em;
+  font-display: fallback;
 }
 @supports (font-variation-settings: normal) {
   html, input, textarea, button {
     font-family: 'Inter var', sans-serif;
-    font-display: fallback;
   }
 }
 
@@ -184,6 +221,10 @@ body {
   margin: 0;
   padding: 0;
 }
+
+ a {
+   color: ${colors(false).blue1}; 
+ }
 
 * {
   box-sizing: border-box;
@@ -199,23 +240,21 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  font-feature-settings: 'ss01' on, 'ss02' on,  'cv01' on, 'cv03' on;
+  
 }
 `
 
 export const ThemedGlobalStyle = createGlobalStyle`
 html {
   color: ${({ theme }) => theme.text1};
-  background-color: ${({ theme }) => theme.bg2};
+  background-color: ${({ theme }) => theme.bg1};
 }
 
 body {
   min-height: 100vh;
   background-position: 0 -30vh;
   background-repeat: no-repeat;
-  background-image: ${({ theme }) =>
-    `radial-gradient(50% 50% at 50% 50%, ${transparentize(0.9, theme.primary1)} 0%, ${transparentize(
-      1,
-      theme.bg1
-    )} 100%)`};
+
 }
 `

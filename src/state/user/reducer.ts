@@ -1,19 +1,20 @@
-import { INITIAL_ALLOWED_SLIPPAGE, DEFAULT_DEADLINE_FROM_NOW } from '../../constants'
+import { DEFAULT_DEADLINE_FROM_NOW } from '../../constants/misc'
 import { createReducer } from '@reduxjs/toolkit'
+import { updateVersion } from '../global/actions'
 import {
   addSerializedPair,
   addSerializedToken,
-  dismissTokenWarning,
   removeSerializedPair,
   removeSerializedToken,
   SerializedPair,
   SerializedToken,
   updateMatchesDarkMode,
   updateUserDarkMode,
-  updateVersion,
   updateUserExpertMode,
   updateUserSlippageTolerance,
-  updateUserDeadline
+  updateUserDeadline,
+  toggleURLWarning,
+  updateUserSingleHopOnly,
 } from './actions'
 
 const currentTimestamp = () => new Date().getTime()
@@ -27,8 +28,11 @@ export interface UserState {
 
   userExpertMode: boolean
 
+  userSingleHopOnly: boolean // only allow swaps on direct pairs
+
   // user defined slippage tolerance in bips, used in all txns
-  userSlippageTolerance: number
+  userSlippageTolerance: number | 'auto'
+  userSlippageToleranceHasBeenMigratedToAuto: boolean // temporary flag for migration status
 
   // deadline set by user in minutes, used in all txns
   userDeadline: number
@@ -36,13 +40,6 @@ export interface UserState {
   tokens: {
     [chainId: number]: {
       [address: string]: SerializedToken
-    }
-  }
-
-  // the token warnings that the user has dismissed
-  dismissedTokenWarnings?: {
-    [chainId: number]: {
-      [tokenAddress: string]: true
     }
   }
 
@@ -54,6 +51,7 @@ export interface UserState {
   }
 
   timestamp: number
+  URLWarningVisible: boolean
 }
 
 function pairKey(token0Address: string, token1Address: string) {
@@ -64,23 +62,46 @@ export const initialState: UserState = {
   userDarkMode: null,
   matchesDarkMode: false,
   userExpertMode: false,
-  userSlippageTolerance: INITIAL_ALLOWED_SLIPPAGE,
+  userSingleHopOnly: false,
+  userSlippageTolerance: 'auto',
+  userSlippageToleranceHasBeenMigratedToAuto: true,
   userDeadline: DEFAULT_DEADLINE_FROM_NOW,
   tokens: {},
   pairs: {},
-  timestamp: currentTimestamp()
+  timestamp: currentTimestamp(),
+  URLWarningVisible: true,
 }
 
-export default createReducer(initialState, builder =>
+export default createReducer(initialState, (builder) =>
   builder
-    .addCase(updateVersion, state => {
+    .addCase(updateVersion, (state) => {
       // slippage isnt being tracked in local storage, reset to default
-      if (typeof state.userSlippageTolerance !== 'number') {
-        state.userSlippageTolerance = INITIAL_ALLOWED_SLIPPAGE
+      // noinspection SuspiciousTypeOfGuard
+      if (
+        typeof state.userSlippageTolerance !== 'number' ||
+        !Number.isInteger(state.userSlippageTolerance) ||
+        state.userSlippageTolerance < 0 ||
+        state.userSlippageTolerance > 5000
+      ) {
+        state.userSlippageTolerance = 'auto'
+      } else {
+        if (
+          !state.userSlippageToleranceHasBeenMigratedToAuto &&
+          [10, 50, 100].indexOf(state.userSlippageTolerance) !== -1
+        ) {
+          state.userSlippageTolerance = 'auto'
+          state.userSlippageToleranceHasBeenMigratedToAuto = true
+        }
       }
 
       // deadline isnt being tracked in local storage, reset to default
-      if (typeof state.userDeadline !== 'number') {
+      // noinspection SuspiciousTypeOfGuard
+      if (
+        typeof state.userDeadline !== 'number' ||
+        !Number.isInteger(state.userDeadline) ||
+        state.userDeadline < 60 ||
+        state.userDeadline > 180 * 60
+      ) {
         state.userDeadline = DEFAULT_DEADLINE_FROM_NOW
       }
 
@@ -106,20 +127,24 @@ export default createReducer(initialState, builder =>
       state.userDeadline = action.payload.userDeadline
       state.timestamp = currentTimestamp()
     })
+    .addCase(updateUserSingleHopOnly, (state, action) => {
+      state.userSingleHopOnly = action.payload.userSingleHopOnly
+    })
     .addCase(addSerializedToken, (state, { payload: { serializedToken } }) => {
+      if (!state.tokens) {
+        state.tokens = {}
+      }
       state.tokens[serializedToken.chainId] = state.tokens[serializedToken.chainId] || {}
       state.tokens[serializedToken.chainId][serializedToken.address] = serializedToken
       state.timestamp = currentTimestamp()
     })
     .addCase(removeSerializedToken, (state, { payload: { address, chainId } }) => {
+      if (!state.tokens) {
+        state.tokens = {}
+      }
       state.tokens[chainId] = state.tokens[chainId] || {}
       delete state.tokens[chainId][address]
       state.timestamp = currentTimestamp()
-    })
-    .addCase(dismissTokenWarning, (state, { payload: { chainId, tokenAddress } }) => {
-      state.dismissedTokenWarnings = state.dismissedTokenWarnings ?? {}
-      state.dismissedTokenWarnings[chainId] = state.dismissedTokenWarnings[chainId] ?? {}
-      state.dismissedTokenWarnings[chainId][tokenAddress] = true
     })
     .addCase(addSerializedPair, (state, { payload: { serializedPair } }) => {
       if (
@@ -139,5 +164,8 @@ export default createReducer(initialState, builder =>
         delete state.pairs[chainId][pairKey(tokenBAddress, tokenAAddress)]
       }
       state.timestamp = currentTimestamp()
+    })
+    .addCase(toggleURLWarning, (state) => {
+      state.URLWarningVisible = !state.URLWarningVisible
     })
 )

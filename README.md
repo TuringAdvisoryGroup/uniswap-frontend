@@ -1,7 +1,9 @@
 # Uniswap Interface
 
-[![Tests](https://github.com/Uniswap/uniswap-interface/workflows/Tests/badge.svg)](https://github.com/Uniswap/uniswap-interface/actions?query=workflow%3ATests)
-[![Styled With Prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://prettier.io/)
+[![Unit Tests](https://github.com/Uniswap/uniswap-interface/actions/workflows/unit-tests.yaml/badge.svg)](https://github.com/Uniswap/uniswap-interface/actions/workflows/unit-tests.yaml)
+[![Integration Tests](https://github.com/Uniswap/uniswap-interface/actions/workflows/integration-tests.yaml/badge.svg)](https://github.com/Uniswap/uniswap-interface/actions/workflows/integration-tests.yaml)
+[![Lint](https://github.com/Uniswap/uniswap-interface/actions/workflows/lint.yml/badge.svg)](https://github.com/Uniswap/uniswap-interface/actions/workflows/lint.yml)
+[![Release](https://github.com/Uniswap/uniswap-interface/actions/workflows/release.yaml/badge.svg)](https://github.com/Uniswap/uniswap-interface/actions/workflows/release.yaml)
 
 An open source interface for Uniswap -- a protocol for decentralized exchange of Ethereum tokens.
 
@@ -11,7 +13,7 @@ An open source interface for Uniswap -- a protocol for decentralized exchange of
 - Twitter: [@UniswapProtocol](https://twitter.com/UniswapProtocol)
 - Reddit: [/r/Uniswap](https://www.reddit.com/r/Uniswap/)
 - Email: [contact@uniswap.org](mailto:contact@uniswap.org)
-- Discord: [Uniswap](https://discord.gg/Y7TF6QA)
+- Discord: [Uniswap](https://discord.gg/FCfyBSbCU5)
 - Whitepaper: [Link](https://hackmd.io/C-DvwDSfSxuh-Gd4WKE_ig)
 
 ## Accessing the Uniswap Interface
@@ -31,7 +33,7 @@ repository.
 ### Install Dependencies
 
 ```bash
-yarn
+yarn install
 ```
 
 ### Run
@@ -40,6 +42,9 @@ yarn
 yarn start
 ```
 
+## Contributions
+
+**Please open all pull requests against the `main` branch.**
 ### Configuring the environment (optional)
 
 To have the interface default to a different network when a wallet is not connected:
@@ -58,7 +63,15 @@ The interface will not work on other networks.
 **Please open all pull requests against the `master` branch.**
 CI checks will run against all PRs.
 
-## Accessing Uniswap Interface V1
+## Accessing Uniswap V2
+
+The Uniswap Interface supports swapping, adding liquidity, removing liquidity and migrating liquidity for 
+Uniswap protocol V2.
+
+- Swap on Uniswap V2: https://app.uniswap.org/#/swap?use=v2
+- View V2 liquidity: https://app.uniswap.org/#/pool/v2
+- Add V2 liquidity: https://app.uniswap.org/#/add/v2
+- Migrate V2 liquidity to V3: https://app.uniswap.org/#/migrate/v2
 
 The Uniswap Interface supports swapping against, and migrating or removing liquidity from Uniswap V1. However,
 if you would like to use Uniswap V1, the Uniswap V1 interface for mainnet and testnets is accessible via IPFS gateways

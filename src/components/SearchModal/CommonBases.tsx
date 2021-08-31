@@ -1,9 +1,9 @@
 import React from 'react'
 import { Text } from 'rebass'
-import { ChainId, Currency, currencyEquals, ETHER, Token } from '@uniswap/sdk'
-import styled from 'styled-components'
+import { ChainId, Currency, currencyEquals, Token, ETHER } from '@uniswap/sdk-core'
+import styled from 'styled-components/macro'
 
-import { SUGGESTED_BASES } from '../../constants'
+import { SUGGESTED_BASES } from '../../constants/routing'
 import { AutoColumn } from '../Column'
 import QuestionHelper from '../QuestionHelper'
 import { AutoRow } from '../Row'
@@ -28,10 +28,10 @@ const BaseWrapper = styled.div<{ disable?: boolean }>`
 export default function CommonBases({
   chainId,
   onSelect,
-  selectedCurrency
+  selectedCurrency,
 }: {
   chainId?: ChainId
-  selectedCurrency?: Currency
+  selectedCurrency?: Currency | null
   onSelect: (currency: Currency) => void
 }) {
   return (
@@ -44,16 +44,20 @@ export default function CommonBases({
       </AutoRow>
       <AutoRow gap="4px">
         <BaseWrapper
-          onClick={() => !currencyEquals(selectedCurrency, ETHER) && onSelect(ETHER)}
-          disable={selectedCurrency === ETHER}
+          onClick={() => {
+            if (!selectedCurrency || !currencyEquals(selectedCurrency, ETHER)) {
+              onSelect(ETHER)
+            }
+          }}
+          disable={selectedCurrency?.isEther}
         >
           <CurrencyLogo currency={ETHER} style={{ marginRight: 8 }} />
           <Text fontWeight={500} fontSize={16}>
             ETH
           </Text>
         </BaseWrapper>
-        {(chainId ? SUGGESTED_BASES[chainId] : []).map((token: Token) => {
-          const selected = selectedCurrency instanceof Token && selectedCurrency.address === token.address
+        {(typeof chainId === 'number' ? SUGGESTED_BASES[chainId] ?? [] : []).map((token: Token) => {
+          const selected = selectedCurrency?.isToken && selectedCurrency.address === token.address
           return (
             <BaseWrapper onClick={() => !selected && onSelect(token)} disable={selected} key={token.address}>
               <CurrencyLogo currency={token} style={{ marginRight: 8 }} />
