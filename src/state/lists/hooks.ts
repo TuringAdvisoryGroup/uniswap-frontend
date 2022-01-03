@@ -8,7 +8,6 @@ import UNSUPPORTED_TOKEN_LIST from '../../constants/tokenLists/uniswap-v2-unsupp
 import { AppState } from '../index'
 import { UNSUPPORTED_LIST_URLS } from './../../constants/lists'
 import { WrappedTokenInfo } from './wrappedTokenInfo'
-import { TokenInfo } from '@uniswap/token-lists'
 
 export type TokenAddressMap = Readonly<
   { [chainId in ChainId | number]: Readonly<{ [tokenAddress: string]: { token: WrappedTokenInfo; list: TokenList } }> }
@@ -28,31 +27,17 @@ const EMPTY_LIST: TokenAddressMap = {
 const listCache: WeakMap<TokenList, TokenAddressMap> | null =
   typeof WeakMap !== 'undefined' ? new WeakMap<TokenList, TokenAddressMap>() : null
 
-const buildToken = (rollExchangeToken: any): TokenInfo => {
-  console.log(rollExchangeToken.tags)
-  return {
-    address: rollExchangeToken.address,
-    chainId: 1,
-    decimals: rollExchangeToken.decimals,
-    logoURI: rollExchangeToken.logoURI,
-    name: rollExchangeToken.name,
-    symbol: rollExchangeToken.symbol,
-    // tags: rollExchangeToken.tags, //@dev: this is to show right label and tooltip for each token
-  }
-}
-
 export function listToTokenMap(list: TokenList): TokenAddressMap {
   const result = listCache?.get(list)
   if (result) return result
 
   const map = list.tokens.reduce<TokenAddressMap>(
     (tokenMap, tokenInfo) => {
-      const token = new WrappedTokenInfo(buildToken(tokenInfo), list)
+      const token = new WrappedTokenInfo(tokenInfo, list)
       if (tokenMap[token.chainId][token.address] !== undefined) {
         console.error(new Error(`Duplicate token! ${token.address}`))
         return tokenMap
       }
-      if (tokenMap[token.chainId][token.address] !== undefined) throw Error('Duplicate tokens.')
       return {
         ...tokenMap,
         [token.chainId]: {
