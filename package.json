@@ -116,9 +116,6 @@
     "workbox-routing": "^6.1.0",
     "workbox-strategies": "^6.1.0"
   },
-  "resolutions": {
-    "@walletconnect/web3-provider": "1.4.2-rc.2"
-  },
   "scripts": {
     "compile-contract-types": "yarn compile-external-abi-types && yarn compile-v3-contract-types",
     "compile-external-abi-types": "typechain --target ethers-v5 --out-dir src/abis/types './src/abis/**/*.json'",
@@ -149,5 +146,13 @@
     ]
   },
   "license": "GPL-3.0-or-later",
-  "dependencies": {}
+  "dependencies": {},
+  "peerDependencies": {
+    "babel-loader": "8.1.0"
+  },
+  "resolutions": {
+    "@walletconnect/web3-provider": "1.4.2-rc.2",
+    "babel-loader": "8.1.0",
+    "webpack": "4.44.2"
+  }
 }
