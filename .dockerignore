@@ -1,0 +1,10 @@
+# Directories
+.git/
+devops/
+node_modules/
+
+# Files
+.env
+.env.production
+Makefile
+cloud.mk
