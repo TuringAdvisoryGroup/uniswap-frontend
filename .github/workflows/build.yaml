@@ -4,13 +4,9 @@ on:
   release:
     types:
       - published
-  push:
-    branches:
-      - gha-workflow
-
+      
 env:
-  # IMAGE_TAG: release-${{ github.event.release.tag_name }}
-  IMAGE_TAG: gha-test
+  IMAGE_TAG: release-${{ github.event.release.tag_name }}
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
